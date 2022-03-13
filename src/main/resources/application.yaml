@@ -3,7 +3,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://dev.gvw.asia:8836/myutils?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&openSSL=false
+    url: jdbc:mysql://dev.gvw.asia:8836/deuterium?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&openSSL=false
     username: myutils
     password: Myutils&084282
   redis:

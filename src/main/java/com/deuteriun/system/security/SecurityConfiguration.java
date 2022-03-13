@@ -1,5 +1,7 @@
 package com.deuteriun.system.security;
 
+import com.deuteriun.system.security.conf.AuthenticateFailureImpl;
+import com.deuteriun.system.security.conf.AuthenticateSuccessImpl;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -20,18 +22,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Resource
     AuthenticateFailureImpl authenticateFailure;
 
+    @Resource
+    UserDetailsServiceImpl userDetailsService;
+
 
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {    //auth.inMemoryAuthentication()
-        auth.inMemoryAuthentication().withUser("User")
-                .password(passwordEncoder.encode("user"))
-                .roles("USER")
-                .authorities("sys:select","sys:update","sys:del")
-                .and().withUser("Admin")
-                .password(passwordEncoder.encode("admin"))
-                .roles("ADMIN")
-                .authorities("sys:select","sys:read","sys:exec","sys:del","sys:admin");
+        auth.userDetailsService(userDetailsService);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.deuteriun.system.security;
+package com.deuteriun.system.security.conf;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

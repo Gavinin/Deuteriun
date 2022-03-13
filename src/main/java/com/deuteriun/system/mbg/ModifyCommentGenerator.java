@@ -56,22 +56,18 @@ public class ModifyCommentGenerator implements CommentGenerator {
     @Override
     public void addJavaFileComment(CompilationUnit compilationUnit) {
 
-        // Dao类注释
-        // 由于MBG没有给Dao生成方类注释，所以这里折中一下，在添加类文件注释时生成下Dao的注释
-        // JavaMapperGenerator中没有调用addClassComment()方法
+
         if (compilationUnit instanceof Interface) {
             Interface interfaze = (Interface) compilationUnit;
             interfaze.addJavaDocLine("/**");
             interfaze.addJavaDocLine(" *");
-            interfaze.addJavaDocLine(" * @author "+Author);
+            interfaze.addJavaDocLine(" * @author " + Author);
             interfaze.addJavaDocLine(" * @date " + getDateString());
             interfaze.addJavaDocLine(" */");
         }
     }
 
-    /**
-     * 类注释
-     */
+
     @Override
     public void addClassComment(InnerClass innerClass, IntrospectedTable introspectedTable) {
     }
@@ -80,13 +76,9 @@ public class ModifyCommentGenerator implements CommentGenerator {
     public void addClassComment(InnerClass innerClass, IntrospectedTable introspectedTable, boolean markAsDoNotDelete) {
     }
 
-    /**
-     * 类注解
-     */
     @Override
     public void addClassAnnotation(InnerClass innerClass, IntrospectedTable introspectedTable, Set<FullyQualifiedJavaType> imports) {
-        // 实体类添加 @Data、@Builder、@NoArgsConstructor、@AllArgsConstructor注解
-        // 这里比较尴尬的是BaseRecordGenerator类没有配置不生成getter、setter方法的入口，所以@Data就不需要了
+
         if (innerClass instanceof TopLevelClass) {
             TopLevelClass topLevelClass = (TopLevelClass) innerClass;
             topLevelClass.addImportedType(new FullyQualifiedJavaType("lombok.Data"));
@@ -115,7 +107,7 @@ public class ModifyCommentGenerator implements CommentGenerator {
         // 这里写死了注释内容，没法获取到表的注释（？？？），如商品信息表
         // 可以找到表名，如product_item
         topLevelClass.addJavaDocLine(" *");
-        topLevelClass.addJavaDocLine(" * @author "+Author);
+        topLevelClass.addJavaDocLine(" * @author " + Author);
         topLevelClass.addJavaDocLine(" * @date " + getDateString());
         topLevelClass.addJavaDocLine(" */");
 
