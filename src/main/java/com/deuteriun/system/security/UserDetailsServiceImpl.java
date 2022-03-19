@@ -17,9 +17,6 @@ import javax.annotation.Resource;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Resource
-    PasswordEncoder passwordEncoder;
-
-    @Resource
     SecurityService securityService;
 
     @Override

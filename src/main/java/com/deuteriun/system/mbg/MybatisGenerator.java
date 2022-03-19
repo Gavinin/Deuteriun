@@ -1,33 +1,58 @@
 package com.deuteriun.system.mbg;
 
-import org.mybatis.generator.api.MyBatisGenerator;
-import org.mybatis.generator.config.Configuration;
-import org.mybatis.generator.config.xml.ConfigurationParser;
-import org.mybatis.generator.exception.InvalidConfigurationException;
-import org.mybatis.generator.exception.XMLParserException;
-import org.mybatis.generator.internal.DefaultShellCallback;
+import com.baomidou.mybatisplus.generator.FastAutoGenerator;
+import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
+import com.baomidou.mybatisplus.generator.config.converts.MySqlTypeConvert;
+import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
+import com.deuteriun.system.mbg.config.MybatisGeneratorConfig;
+import org.springframework.stereotype.Component;
 
-import java.io.File;
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
+@Component
 public class MybatisGenerator {
-    public static void main(String[] args) throws XMLParserException, SQLException, IOException, InterruptedException, InvalidConfigurationException {
-        generator();
+
+    private final String projectPath = System.getProperty("user.dir");
+    // 数据源配置
+
+
+    public void generatorCode (MybatisGeneratorConfig mybatisGeneratorConfig) {
+        DataSourceConfig.Builder dataSourceConfig = new DataSourceConfig.Builder(mybatisGeneratorConfig.getDatabaseURL(), mybatisGeneratorConfig.getDatabaseUser(), mybatisGeneratorConfig.getDatabasePassword())
+                .typeConvert(new MySqlTypeConvert());
+        FastAutoGenerator
+                .create(dataSourceConfig)
+                //全局配置
+                .globalConfig(builder -> {
+                    builder.author(mybatisGeneratorConfig.getAuthor()) // 设置作者
+                            // .enableSwagger() // 开启 swagger 模式
+                            .disableOpenDir() // 执行完毕不打开文件夹
+                            .fileOverride() // 覆盖已生成文件
+                            .outputDir(projectPath + mybatisGeneratorConfig.getGlobalProjectPath()); // 指定输出目录
+                })
+                //包配置
+                .packageConfig(builder -> {
+                    builder.parent(mybatisGeneratorConfig.getParentPackageName())
+                            .controller("controller")
+                            .entity("entity")
+                            .service("service")
+                            .mapper("mapper");
+                })
+                //策略配置
+                .strategyConfig(builder -> {
+                    builder.addInclude(mybatisGeneratorConfig.getTables()) // 设置需要生成的表名
+                            .addTablePrefix("")// 设置过滤表前缀
+                            .serviceBuilder() //开启service策略配置
+                            .formatServiceFileName("%sService") //取消Service前的I
+                            .controllerBuilder() //开启controller策略配置
+                            .enableRestStyle() //配置restful风格
+                            .enableHyphenStyle() //url中驼峰转连字符
+                            .entityBuilder() //开启实体类配置
+                            .enableLombok() //开启lombok
+                            .enableChainModel(); //开启lombok链式操作
+
+                })
+                //模板配置
+                .templateEngine(new FreemarkerTemplateEngine()) // 使用Freemarker引擎模板，默认的是Velocity引擎模板
+                //执行
+                .execute();
     }
-
-  public static void generator() throws XMLParserException, IOException, InvalidConfigurationException, SQLException, InterruptedException {
-      List<String> warnings = new ArrayList<>();
-      boolean overwrite = true;
-      ConfigurationParser cp = new ConfigurationParser(warnings);
-
-      File configFile = new File(System.getProperty("user.dir")+"/src/main/resources/mybatis/generator-configuration.xml");
-      Configuration config = cp.parseConfiguration(configFile);
-      DefaultShellCallback callback = new DefaultShellCallback(overwrite);
-      MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, callback, warnings);
-      myBatisGenerator.generate(null);
-  }
-
 }
+

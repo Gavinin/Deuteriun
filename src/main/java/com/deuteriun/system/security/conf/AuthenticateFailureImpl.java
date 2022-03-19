@@ -18,20 +18,19 @@ public class AuthenticateFailureImpl {
 
         return (request, response, exception) -> {
             response.setContentType("application/json;charset=utf-8");
-            System.out.println(exception);
             // 有很多登录失败的异常
             Map<Object, Object> map = new HashMap<>(4);
             map.put("code", 401);
             // instanceof 判断左右是否是右边的 一个实例  这里的exception已经是一个具体的错误了
-            if (exception instanceof LockedException) {
+            if (exception.getCause() instanceof LockedException) {
                 map.put("msg", "账户被锁定，登陆失败！");
-            } else if (exception instanceof BadCredentialsException) {
+            } else if (exception.getCause() instanceof BadCredentialsException) {
                 map.put("msg", "账户或者密码错误，登陆失败！");
-            } else if (exception instanceof DisabledException) {
+            } else if (exception.getCause() instanceof DisabledException) {
                 map.put("msg", "账户被禁用，登陆失败！");
-            } else if (exception instanceof AccountExpiredException) {
+            } else if (exception.getCause() instanceof AccountExpiredException) {
                 map.put("msg", "账户已过期，登陆失败！");
-            } else if (exception instanceof CredentialsExpiredException) {
+            } else if (exception.getCause() instanceof CredentialsExpiredException) {
                 map.put("msg", "密码已过期，登陆失败！");
             } else {
                 map.put("msg", "登陆失败！");

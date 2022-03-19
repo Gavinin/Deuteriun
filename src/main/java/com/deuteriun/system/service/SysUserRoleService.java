@@ -1,6 +1,6 @@
 package com.deuteriun.system.service;
 
-import com.deuteriun.system.entity.SysUser;
+import com.deuteriun.system.entity.SysUserRole;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author Gavinin
  * @since 2022-03-19
  */
-public interface SysUserService extends IService<SysUser> {
+public interface SysUserRoleService extends IService<SysUserRole> {
 
 }

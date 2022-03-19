@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://dev.gvw.asia:8836/deuteriun?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&openSSL=false
+    username: myutils
+    password: Myutils&084282
+
+  redis:
+    host: dev.gvw.asia
+    port: 8879
+    database: 1
+    password: Gavin&084282
+
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+logging:
+  level:
+    org:
+      springframework:
+        security: error

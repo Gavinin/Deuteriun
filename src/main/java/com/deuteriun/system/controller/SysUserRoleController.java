@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2022-03-19
  */
 @RestController
-@RequestMapping("/sys-log")
-public class SysLogController {
+@RequestMapping("/sys-user-role")
+public class SysUserRoleController {
 
 }

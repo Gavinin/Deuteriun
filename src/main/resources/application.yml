@@ -1,0 +1,15 @@
+server:
+  port: 8896
+
+spring:
+  application:
+    name: springboot-profile
+  profiles:
+    active: local
+  main:
+    banner-mode: off
+
+mybatis-plus:
+  mapper-locations: classpath:mybatis/*/*Mapper.xml
+  type-aliases-package: com.deuteriun.*.mapper
+

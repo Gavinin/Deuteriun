@@ -1,0 +1,32 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/deuteriun?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&openSSL=false
+    username: deuteriun
+    password: Dt#842196
+
+  redis:
+    host: dev.gvw.asia
+    port: 8879
+    database: 1
+    password: Gavin&084282
+
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+#mybatis-generator:
+#  data-source: jdbc:mysql://dev.gvw.asia:8836/deuteriun
+#  db-user: myutils
+#  db-psw: Myutils&084282
+#  package-name: com.deuteriun.remote.clipboard
+#  author: gavinin
+#  # total table write all
+#  table-name: remote_clipboard
+
+
+logging:
+  level:
+    org:
+      springframework:
+        security: debug

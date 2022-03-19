@@ -6,7 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@MapperScan("com.deuteriun.*.dao")
+@MapperScan("com.deuteriun.*.mapper")
 public class DeuteriunApplication {
 
     public static void main(String[] args) {
