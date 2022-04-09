@@ -1,58 +1,45 @@
 package com.deuteriun.system.security.service.impl;
 
 import com.deuteriun.system.entity.SysUser;
-import com.deuteriun.system.entity.SysUserRoleDTO;
-import com.deuteriun.system.mapper.SysUserMapper;
-import com.deuteriun.system.mapper.SysUserRoleMapper;
-import com.deuteriun.system.security.entity.UserDo;
+import com.deuteriun.system.entity.SecurityUser;
 import com.deuteriun.system.security.service.SecurityService;
+import com.deuteriun.system.service.SysUserRoleService;
+import com.deuteriun.system.service.SysUserService;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.LockedException;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class SecurityServiceImpl implements SecurityService {
 
     @Resource
-    SysUserMapper sysUserMapper;
+    SysUserService sysUserService;
 
     @Resource
-    SysUserRoleMapper sysUserRoleMapper;
+    SysUserRoleService sysUserRoleService;
 
 
     @Override
-    public UserDo getUserDetailByName(String userName) {
-        SysUser userByName = sysUserMapper.getUserByName(userName);
-        if (userByName==null){
+    public SecurityUser getUserDetailByName(String userName) {
+        SysUser sysUser = sysUserService.getUserByName(userName);
+        if (sysUser==null){
             throw new UsernameNotFoundException("");
-        }else if (userByName.getBan()){
+        }else if (sysUser.getBan()){
             throw new LockedException("");
-        }else if (userByName.getDel()){
+        }else if (sysUser.getDel()){
             throw new DisabledException("");
         }
-        UserDo userDo = new UserDo();
-        userDo.setName(userByName.getNameId());
-        userDo.setPassword(userByName.getPassword());
-        userDo.setGrantedAuthorityList(getGrantedAuthorityListById(userByName.getId()));
+        SecurityUser securityUser = new SecurityUser();
+        securityUser.setUsername(sysUser.getNameId());
+        securityUser.setPassword(sysUser.getPassword());
+        securityUser.setGrantedAuthorityList(sysUserRoleService.getGrantedAuthorityListById(sysUser.getId()));
 
-        return userDo;
+        return securityUser;
     }
 
-    @Override
-    public List<GrantedAuthority> getGrantedAuthorityListById(Long id) {
-        List<SysUserRoleDTO> maps = sysUserRoleMapper.listAllByUserId(id);
-        List<GrantedAuthority> grantedAuthorityList = new ArrayList<>();
 
-        for (SysUserRoleDTO sysUserRoleDetail : maps) {
-            grantedAuthorityList.add(new SimpleGrantedAuthority(sysUserRoleDetail.getRoleCode()));
-        }
-        return grantedAuthorityList;
-    }
+
 }

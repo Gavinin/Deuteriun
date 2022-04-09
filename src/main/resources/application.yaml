@@ -13,3 +13,5 @@ mybatis-plus:
   mapper-locations: classpath:mybatis/*/*Mapper.xml
   type-aliases-package: com.deuteriun.*.mapper
 
+deuteriun:
+  jwt-secret-key: changethiskey

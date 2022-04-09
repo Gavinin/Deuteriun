@@ -1,44 +1,42 @@
 package com.deuteriun.system.security.conf;
 
+import com.deuteriun.system.common.enums.WebStatus;
+import com.deuteriun.system.entity.Result;
+import com.deuteriun.system.entity.SecurityUser;
+import com.deuteriun.system.jwt.JwtTokenUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
-import javax.servlet.ServletException;
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.Map;
 
 @Configuration
 public class AuthenticateSuccessImpl implements AuthenticationSuccessHandler {
 
+    @Resource
+    JwtTokenUtils jwtTokenUtils;
 
     /**
-     * @param request
-     * @param response
-     * @param authentication
-     * @throws IOException
-     * @throws ServletException
+     *
      */
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         // Create JSON
-        response.setContentType("application/json;charset=utf-8");
-        Map<Object, Object> map = new HashMap<>(8);
-        map.put("code", 200);
-        map.put("msg", "登录成功");
-        map.put("data", authentication);
-        ObjectMapper objectMapper = new ObjectMapper();
-        String jsonStr = objectMapper.writeValueAsString(map);
-        // Create output stream
-        PrintWriter writer = response.getWriter();
-        writer.write(jsonStr);
-        // refresh stream and close
-        writer.flush();
-        writer.close();
+        SecurityUser principal = (SecurityUser) authentication.getPrincipal();
+        SecurityUser securityUser = new SecurityUser();
+        securityUser.setGrantedAuthorityList(principal.getGrantedAuthorityList());
+        securityUser.setUsername(principal.getUsername());
+        String token = jwtTokenUtils.generateToken(authentication);
+        try {
+            //登录成功時，返回json格式进行提示
+            response.setContentType(WebStatus.CONTENT_TYPE);
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.writeValue(response.getWriter(), Result.success(token));
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
     }
 }
