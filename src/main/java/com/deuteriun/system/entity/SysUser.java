@@ -31,7 +31,7 @@ public class SysUser implements Serializable {
     /**
      * System unify user id, search user by this key, user can't change it.
      */
-    private String nameId;
+    private String userName;
 
     /**
      * User modify name , user can change it.

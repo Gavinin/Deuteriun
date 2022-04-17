@@ -1,4 +1,4 @@
-package com.deuteriun.system.entity;
+package com.deuteriun.system.common.utils;
 
 import com.deuteriun.system.common.enums.ReturnStatus;
 import lombok.AllArgsConstructor;

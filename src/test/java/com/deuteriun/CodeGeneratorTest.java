@@ -14,19 +14,19 @@ import javax.annotation.Resource;
 import java.util.Arrays;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = {CodeGenerator.class})
+@SpringBootTest(classes = {CodeGeneratorTest.class})
 @EnableAutoConfiguration
-public class CodeGenerator {
+public class CodeGeneratorTest {
 
 
     public static void main(String[] args) {
         MybatisGeneratorConfig mybatisGeneratorConfig = new MybatisGeneratorConfig();
         mybatisGeneratorConfig.setAuthor("Gavinin");
-        mybatisGeneratorConfig.setDatabaseURL("jdbc:mysql://localhost:3306/deuteriun?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&openSSL=false");
-        mybatisGeneratorConfig.setDatabaseUser("deuteriun");
-        mybatisGeneratorConfig.setDatabasePassword("Dt#842196");
+        mybatisGeneratorConfig.setDatabaseURL("jdbc:mysql://dev.gvw.asia:8836/deuteriun?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&openSSL=false");
+        mybatisGeneratorConfig.setDatabaseUser("myutils");
+        mybatisGeneratorConfig.setDatabasePassword("Myutils&084282");
         mybatisGeneratorConfig.setParentPackageName("com.deuteriun.system");
-        mybatisGeneratorConfig.setTables(Arrays.asList("sys_user,sys_role,sys_user_role,sys_log".split(",")));
+        mybatisGeneratorConfig.setTables(Arrays.asList("sys_user,sys_user_role,sys_role_code,sys_log".split(",")));
 
         new MybatisGenerator().generatorCode(mybatisGeneratorConfig);
 

@@ -3,7 +3,7 @@ package com.deuteriun.system.common.utils;
 import org.springframework.stereotype.Component;
 
 @Component
-public class Util {
+public class LogoUtil {
 
     public static void StartLogo() {
         String logo = "______               _                _               \n" +

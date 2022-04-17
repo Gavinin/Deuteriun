@@ -4,10 +4,13 @@ import com.auth0.jwt.algorithms.Algorithm;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 
-public abstract class JwtTokenProvider implements JwtTokenInterface {
+public abstract class JwtTokenProvider implements JwtTokenService {
 
     @Value("deuteriun.jwt-secret-key")
-    protected static String jwtSecretKey;
+    static String jwtSecretKey;
+
+    @Value("deuteriun.jwt-name")
+    String JWT_NAME;
 
     public Long getJwtExpiration() {
         return 5 * 60 * 1000L;

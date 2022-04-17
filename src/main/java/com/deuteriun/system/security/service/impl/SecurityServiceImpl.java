@@ -1,7 +1,7 @@
 package com.deuteriun.system.security.service.impl;
 
 import com.deuteriun.system.entity.SysUser;
-import com.deuteriun.system.entity.SecurityUser;
+import com.deuteriun.system.security.entity.SecurityUser;
 import com.deuteriun.system.security.service.SecurityService;
 import com.deuteriun.system.service.SysUserRoleService;
 import com.deuteriun.system.service.SysUserService;
@@ -21,7 +21,6 @@ public class SecurityServiceImpl implements SecurityService {
     @Resource
     SysUserRoleService sysUserRoleService;
 
-
     @Override
     public SecurityUser getUserDetailByName(String userName) {
         SysUser sysUser = sysUserService.getUserByName(userName);
@@ -33,7 +32,7 @@ public class SecurityServiceImpl implements SecurityService {
             throw new DisabledException("");
         }
         SecurityUser securityUser = new SecurityUser();
-        securityUser.setUsername(sysUser.getNameId());
+        securityUser.setUsername(sysUser.getUserName());
         securityUser.setPassword(sysUser.getPassword());
         securityUser.setGrantedAuthorityList(sysUserRoleService.getGrantedAuthorityListById(sysUser.getId()));
 

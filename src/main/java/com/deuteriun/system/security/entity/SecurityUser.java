@@ -1,4 +1,4 @@
-package com.deuteriun.system.entity;
+package com.deuteriun.system.security.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

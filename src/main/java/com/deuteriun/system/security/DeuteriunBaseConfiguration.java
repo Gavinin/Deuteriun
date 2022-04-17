@@ -1,31 +1,30 @@
 package com.deuteriun.system.security;
 
-import com.deuteriun.system.security.conf.AuthenticateFailureImpl;
-import com.deuteriun.system.security.conf.AuthenticateSuccessImpl;
+import com.deuteriun.system.security.conf.RestAuthenticateFailureImpl;
+import com.deuteriun.system.security.conf.RestAuthenticateSuccessImpl;
+import com.deuteriun.system.security.conf.RestLogoutSuccessHandlerImpl;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.OrRequestMatcher;
 
 import javax.annotation.Resource;
 
 @EnableWebSecurity
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class DeuteriunBaseConfiguration extends WebSecurityConfigurerAdapter {
 
     @Resource
     PasswordEncoder passwordEncoder;
 
     @Resource
-    AuthenticateSuccessImpl authenticateSuccess;
-
-    @Resource
-    AuthenticateFailureImpl authenticateFailure;
+    RestLogoutSuccessHandlerImpl logoutSuccessHandler;
 
     @Resource
     UserDetailsServiceImpl userDetailsService;
-
 
 
     @Override
@@ -35,12 +34,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        super.configure(http);
         http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                        .ignoringAntMatchers("/login");
+                .ignoringAntMatchers("/login");
+
 //        http.formLogin()
 //                .successHandler(authenticateSuccess)
 //                .failureHandler(authenticateFailure.authenticationFailureHandler());
+
+        http.logout().logoutRequestMatcher(new OrRequestMatcher(
+                        new AntPathRequestMatcher("/logout", "GET")
+                ))
+                .invalidateHttpSession(true)
+                .clearAuthentication(true).logoutSuccessHandler(logoutSuccessHandler);
 
         http.authorizeRequests().anyRequest().authenticated();
 

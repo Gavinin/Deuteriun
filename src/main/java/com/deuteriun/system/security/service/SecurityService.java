@@ -1,6 +1,6 @@
 package com.deuteriun.system.security.service;
 
-import com.deuteriun.system.entity.SecurityUser;
+import com.deuteriun.system.security.entity.SecurityUser;
 
 public interface SecurityService {
 
