@@ -16,9 +16,6 @@ public class RestAuthenticateSuccessImpl implements AuthenticationSuccessHandler
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         SecurityUser principal = (SecurityUser)authentication.getPrincipal();
-        SecurityUser securityUser = new SecurityUser();
-        securityUser.setGrantedAuthorityList(principal.getGrantedAuthorityList());
-        securityUser.setUsername(principal.getUsername());
         String token = JwtTokenUtils.generateToken(authentication);
         try {
             ServletUtil.render(response, token);

@@ -13,9 +13,17 @@ mybatis-plus:
   mapper-locations: classpath:mybatis/*/*Mapper.xml
   type-aliases-package: com.deuteriun.*.mapper
 
+swagger:
+  enable: true
+  application-name: ${spring.application.name}
+  application-version: 1.0
+  application-description: Deuteriun API
+
 deuteriun:
   front-token: TOKEN
   jwt-name: username
   jwt-secret-key: changethiskey
 #  min
   jwt-expire-time: 60
+
+

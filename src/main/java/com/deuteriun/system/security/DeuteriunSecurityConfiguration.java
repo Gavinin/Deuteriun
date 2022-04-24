@@ -6,8 +6,10 @@ import com.deuteriun.system.security.conf.RestLogoutSuccessHandlerImpl;
 import com.deuteriun.system.security.filter.JWTLoginFilter;
 import com.deuteriun.system.security.filter.SecurityAuthTokenFilter;
 import com.deuteriun.system.security.service.impl.UserDetailsServiceImpl;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -44,6 +46,21 @@ public class DeuteriunSecurityConfiguration extends WebSecurityConfigurerAdapter
     }
 
     @Override
+    public void configure(WebSecurity web) {
+        // allow Swagger
+        String[] authWhiteList = {
+                "/swagger-ui/**",
+                "/swagger-resources/**",
+                "/v3/**",
+                "/csrf"
+        };
+
+        web.ignoring()
+//                .antMatchers(HttpMethod.OPTIONS, "/**")
+                .antMatchers(authWhiteList);
+    }
+
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
 //        http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
 //                .ignoringAntMatchers("/login");
@@ -59,15 +76,15 @@ public class DeuteriunSecurityConfiguration extends WebSecurityConfigurerAdapter
                 .clearAuthentication(true).logoutSuccessHandler(logoutSuccessHandler);
 
         http.authorizeRequests()
-                .antMatchers(OPEN_ADDRESS).anonymous()// 匿名用户权限
-                .antMatchers(USER_ADDRESS).hasRole(SYS_USER_FLAG)//普通用户权限
+                .antMatchers(OPEN_ADDRESS).anonymous()
+                .antMatchers(USER_ADDRESS).hasRole(SYS_USER_FLAG)
                 .antMatchers(LOGIN_ADDRESS).permitAll()
                 .anyRequest().authenticated().and()
                 .logout()
                 .logoutSuccessHandler(logoutSuccessHandler)
                 .and()
                 .addFilterBefore(new JWTLoginFilter(authenticationManager()), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(new SecurityAuthTokenFilter(authenticationManager()),UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new SecurityAuthTokenFilter(authenticationManager()), UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()

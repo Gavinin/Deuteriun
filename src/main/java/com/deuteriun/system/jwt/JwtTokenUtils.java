@@ -47,7 +47,6 @@ public class JwtTokenUtils  {
     public static String generateToken(String userName) {
         Date expireDate = new Date(System.currentTimeMillis() + JWT_EXPIRE_TIME);
         try {
-            // Sign JWT
             return JWT.create()
                     .withExpiresAt(expireDate)
                     .withClaim(JWT_NAME, userName)
