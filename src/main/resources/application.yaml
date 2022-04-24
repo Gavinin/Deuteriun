@@ -14,7 +14,8 @@ mybatis-plus:
   type-aliases-package: com.deuteriun.*.mapper
 
 deuteriun:
-  jwt:
-    token: TOKEN
-    jwt-name: username
-    jwt-secret-key: changethiskey
+  front-token: TOKEN
+  jwt-name: username
+  jwt-secret-key: changethiskey
+#  min
+  jwt-expire-time: 60

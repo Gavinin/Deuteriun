@@ -36,7 +36,7 @@ public class SysUser implements Serializable {
     /**
      * User modify name , user can change it.
      */
-    private String nickName;
+    private String userNickName;
 
     /**
      * jwt key

@@ -2,8 +2,11 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/deuteriun?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&openSSL=false
-    username: deuteriun
-    password: Dt#842196
+#    username: deuteriun
+#    password: Dt#842196
+    username: root
+    password: Gavin&084282
+
 
   redis:
     host: dev.gvw.asia

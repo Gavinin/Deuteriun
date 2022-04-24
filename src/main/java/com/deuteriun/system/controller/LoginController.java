@@ -4,13 +4,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RequestMapping()
 @RestController
+@RequestMapping()
 public class LoginController {
 
-    @PostMapping
-    public String login(){
+    @PostMapping("/gc")
+    public String gc(){
 
         return "success";
     }
 }
+

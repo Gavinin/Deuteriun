@@ -6,7 +6,7 @@
         id, user_name, user_nick_name, password, create_date, modify_date, del, ban
     </sql>
 
-    <select id="getUserByName" parameterType="java.lang.String" resultMap="com.deuteriun.system.entity.SysUser">
+    <select id="getUserByName" resultType="com.deuteriun.system.entity.SysUser">
         select
         <include refid="Base_Column_List"/>
         from sys_user
