@@ -1,12 +1,10 @@
 package com.deuteriun.system.security;
 
-import com.deuteriun.system.security.conf.RestAuthenticateFailureImpl;
-import com.deuteriun.system.security.conf.RestAuthenticateSuccessImpl;
+import com.deuteriun.system.security.conf.JwtAuthenticationSecurityConfig;
 import com.deuteriun.system.security.conf.RestLogoutSuccessHandlerImpl;
-import com.deuteriun.system.security.filter.JWTLoginFilter;
-import com.deuteriun.system.security.filter.SecurityAuthTokenFilter;
-import com.deuteriun.system.security.service.impl.UserDetailsServiceImpl;
-import org.springframework.http.HttpMethod;
+import com.deuteriun.system.security.filter.TokenAuthenticationSecurityFilter;
+import com.deuteriun.system.security.service.impl.JwtUserDetailsServiceImpl;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -37,7 +35,13 @@ public class DeuteriunSecurityConfiguration extends WebSecurityConfigurerAdapter
     RestLogoutSuccessHandlerImpl logoutSuccessHandler;
 
     @Resource
-    UserDetailsServiceImpl userDetailsService;
+    JwtUserDetailsServiceImpl userDetailsService;
+
+    @Resource
+    JwtAuthenticationSecurityConfig jwtAuthenticationSecurityConfig;
+
+    @Resource
+    private TokenAuthenticationSecurityFilter tokenAuthenticationSecurityFilter;
 
 
     @Override
@@ -65,31 +69,35 @@ public class DeuteriunSecurityConfiguration extends WebSecurityConfigurerAdapter
 //        http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
 //                .ignoringAntMatchers("/login");
 
-//        http.formLogin()
-//                .successHandler(authenticateSuccess)
-//                .failureHandler(authenticateFailure.authenticationFailureHandler());
-
-        http.logout().logoutRequestMatcher(new OrRequestMatcher(
+        http.formLogin()
+                .disable()
+                .apply(jwtAuthenticationSecurityConfig)
+                .and().
+                logout().logoutRequestMatcher(new OrRequestMatcher(
                         new AntPathRequestMatcher(LOGOUT_ADDRESS, "GET")
                 ))
                 .invalidateHttpSession(true)
-                .clearAuthentication(true).logoutSuccessHandler(logoutSuccessHandler);
-
-        http.authorizeRequests()
+                .clearAuthentication(true).logoutSuccessHandler(logoutSuccessHandler)
+                .and()
+                .authorizeRequests()
                 .antMatchers(OPEN_ADDRESS).anonymous()
                 .antMatchers(USER_ADDRESS).hasRole(SYS_USER_FLAG)
                 .antMatchers(LOGIN_ADDRESS).permitAll()
-                .anyRequest().authenticated().and()
+                .anyRequest().authenticated()
+                .and()
                 .logout()
                 .logoutSuccessHandler(logoutSuccessHandler)
                 .and()
-                .addFilterBefore(new JWTLoginFilter(authenticationManager()), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(new SecurityAuthTokenFilter(authenticationManager()), UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
+                .addFilterBefore(authenticationSecurityFilterBean(), UsernamePasswordAuthenticationFilter.class)
                 .csrf().disable();
 
+    }
+    @Bean
+    public TokenAuthenticationSecurityFilter authenticationSecurityFilterBean(){
+        return new TokenAuthenticationSecurityFilter();
     }
 
 

@@ -1,8 +1,6 @@
 package com.deuteriun.system.security.filter;
 
 import com.deuteriun.system.entity.LoginInfoDTO;
-import com.deuteriun.system.security.conf.RestAuthenticateFailureImpl;
-import com.deuteriun.system.security.conf.RestAuthenticateSuccessImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationServiceException;
@@ -12,24 +10,26 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
+public class JwtAuthenticationSecurityFilter extends AbstractAuthenticationProcessingFilter {
 
     private static final boolean POST_ONLY = true;
+    private static final String ADDR = "/login/jwt";
+    private static final String HTTP_METHOD_POST = "POST";
 
-    public JWTLoginFilter(AuthenticationManager authenticationManager) {
-        super(new AntPathRequestMatcher("/login/jwt", "POST"));
+
+    public JwtAuthenticationSecurityFilter(AuthenticationManager authenticationManager) {
+        super(new AntPathRequestMatcher(ADDR, HTTP_METHOD_POST));
         setAuthenticationManager(authenticationManager);
     }
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException {
 
-        if (POST_ONLY &&  !request.getMethod().equals("POST")){
+        if (POST_ONLY &&  !request.getMethod().equals(HTTP_METHOD_POST)){
             throw new AuthenticationServiceException("Authentication method not supported: " + request.getMethod());
         }
 
@@ -38,13 +38,4 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
         return getAuthenticationManager().authenticate(authenticationToken);
     }
 
-    @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) {
-        new RestAuthenticateSuccessImpl().onAuthenticationSuccess(request, response, authResult);
-    }
-
-    @Override
-    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException {
-        new RestAuthenticateFailureImpl().onAuthenticationFailure(request, response, failed);
-    }
 }

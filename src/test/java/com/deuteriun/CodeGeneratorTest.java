@@ -22,11 +22,11 @@ public class CodeGeneratorTest {
     public static void main(String[] args) {
         MybatisGeneratorConfig mybatisGeneratorConfig = new MybatisGeneratorConfig();
         mybatisGeneratorConfig.setAuthor("Gavinin");
-        mybatisGeneratorConfig.setDatabaseURL("jdbc:mysql://dev.gvw.asia:8836/deuteriun?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&openSSL=false");
-        mybatisGeneratorConfig.setDatabaseUser("myutils");
-        mybatisGeneratorConfig.setDatabasePassword("Myutils&084282");
+        mybatisGeneratorConfig.setDatabaseURL("jdbc:mysql://localhost:3306/deuteriun?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&openSSL=false");
+        mybatisGeneratorConfig.setDatabaseUser("root");
+        mybatisGeneratorConfig.setDatabasePassword("Gavin&084282");
         mybatisGeneratorConfig.setParentPackageName("com.deuteriun.system");
-        mybatisGeneratorConfig.setTables(Arrays.asList("sys_user,sys_user_role,sys_role_code,sys_log".split(",")));
+        mybatisGeneratorConfig.setTables(Arrays.asList("sys_login_jwt_blacklist".split(",")));
 
         new MybatisGenerator().generatorCode(mybatisGeneratorConfig);
 

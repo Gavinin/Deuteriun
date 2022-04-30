@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -15,47 +17,24 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author Gavinin
- * @since 2022-03-19
+ * @since 2022-05-01
  */
 @Getter
 @Setter
 @Accessors(chain = true)
-@TableName("sys_user")
-public class SysUser implements Serializable {
+@TableName("sys_login_jwt_blacklist")
+public class SysLoginJwtBlacklist implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    /**
-     * System unify user id, search user by this key, user can't change it.
-     */
     private String userName;
 
-    /**
-     * User modify name , user can change it.
-     */
-    private String userNickName;
+    private String userJwt;
 
-    /**
-     * jwt key
-     */
-    private String password;
-
-    private LocalDateTime createDate;
-
-    private LocalDateTime modifyDate;
-
-    /**
-     * User weather be deleted
-     */
-    private Boolean del;
-
-    /**
-     * User has been deleted
-     */
-    private Boolean ban;
+    private Date createDate;
 
 
 }

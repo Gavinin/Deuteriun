@@ -12,15 +12,15 @@ import java.io.IOException;
 @RestController
 public class ErrorController extends HttpServlet {
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("s","s");
-    }
-
-    @PostMapping("/error")
-    public String error(){
-        return "Wrong URL";
-
-    }
+//    @Override
+//    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        req.setAttribute("s","s");
+//    }
+//
+//    @PostMapping("/error")
+//    public String error(){
+//        return "Wrong URL";
+//
+//    }
 
 }

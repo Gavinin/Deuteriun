@@ -1,9 +1,5 @@
 package com.deuteriun.system.service;
 
-import com.deuteriun.system.jwt.JwtTokenUtils;
-
-import javax.annotation.Resource;
-
 public interface AuthenticService {
 
 //    @Resource
@@ -23,7 +19,7 @@ public interface AuthenticService {
 //
 //        //生成JWT
 //        UserDetails userDetails = userDetailsService.loadUserByUsername( username );
-//        return jwtTokenUtil.generateToken(userDetails);
+//        return jwtTokenUtil.generateJWT(userDetails);
 //    }
 //
 //    public String refreshToken(String oldToken) {

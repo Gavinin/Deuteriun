@@ -3,7 +3,6 @@ package com.deuteriun.system.security.service.impl;
 import com.deuteriun.system.common.utils.StringUtils;
 import com.deuteriun.system.security.entity.SecurityUser;
 import com.deuteriun.system.security.service.SecurityService;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -13,7 +12,7 @@ import javax.annotation.Resource;
 
 
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class JwtUserDetailsServiceImpl implements UserDetailsService {
 
     @Resource
     SecurityService securityService;

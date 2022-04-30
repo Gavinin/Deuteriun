@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deuteriun.system.mapper.SysLoginJwtBlacklistMapper">
+    <delete id="deleteByUserName">
+        DELETE
+        FROM sys_login_jwt_blacklist
+        WHERE user_name = #{userName};
+    </delete>
+
+    <select id="listByuserNameAndToken" resultType="com.deuteriun.system.entity.SysLoginJwtBlacklist">
+        SELECT id, user_name, user_jwt
+        FROM sys_login_jwt_blacklist
+        WHERE user_name = #{userName}
+          and user_jwt = #{token};
+    </select>
+    <select id="listByuserName" resultType="com.deuteriun.system.entity.SysLoginJwtBlacklist">
+        SELECT id, user_name, user_jwt
+        FROM sys_login_jwt_blacklist
+        WHERE user_name = #{userName};
+    </select>
+</mapper>

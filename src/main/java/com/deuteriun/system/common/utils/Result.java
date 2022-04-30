@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 /**
  * <p>
  * Return to clint with JSON
@@ -19,30 +21,40 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Result {
     private Integer code;
-    private String msg;
-    private Object data;
+    private String message;
+    private String date;
+    private String path;
+    private Object body;
+
 
 
     public Result(ReturnStatus returnStatus) {
         this.code = returnStatus.getStatusCode();
-        this.msg = returnStatus.getStatusMessage();
+        this.message = returnStatus.getStatusMessage();
+        this.date = ConstUtils.DATE_TIME_FORMAT.format(new Date());
     }
 
     public static Result success(ReturnStatus status) {
-       return new Result(status);
+        return new Result(status);
 
+    }
+
+    public static Result success(Object data, String path) {
+        Result success = success(data);
+        success.setPath(path);
+        return success;
     }
 
     public static Result success(Object data) {
         Result result = new Result(ReturnStatus.SUCCESS);
-        result.setData(data);
+        result.setBody(data);
         return result;
     }
 
 
     public static Result error(ReturnStatus returnStatus, Object data) {
         Result result = new Result(returnStatus);
-        result.setData(data);
+        result.setBody(data);
         return result;
     }
 

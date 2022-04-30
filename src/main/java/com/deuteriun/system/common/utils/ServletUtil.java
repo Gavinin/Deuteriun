@@ -1,12 +1,28 @@
 package com.deuteriun.system.common.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class ServletUtil {
+
+    /**
+     * Get Token From Http request , with 2 side, header or address parameter
+     *
+     * @param request
+     * @return
+     */
+    public static String getTokenFromHttpRequest(HttpServletRequest request) {
+
+        String token = request.getHeader(ConstUtils.FRONT_TOKEN);
+        if (StringUtils.isBlank(token)) {
+            token = request.getParameter(ConstUtils.FRONT_TOKEN);
+        }
+        return token;
+    }
 
     public static void render(HttpServletRequest request, HttpServletResponse response,Object data) throws IOException {
         render(response,data);

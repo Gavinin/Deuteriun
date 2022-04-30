@@ -3,6 +3,7 @@ package com.deuteriun.system.security.conf;
 import com.deuteriun.system.common.enums.ReturnStatus;
 import com.deuteriun.system.common.utils.Result;
 import com.deuteriun.system.common.utils.ServletUtil;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.AuthenticationException;
