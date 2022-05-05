@@ -4,7 +4,6 @@ package com.deuteriun.system.common.utils;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.interfaces.Claim;
 import com.deuteriun.system.jwt.JwtUtils;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -30,5 +29,9 @@ public class DeuteriunJwtUtils extends JwtUtils {
 
     public static Date getExpireDate(String token) {
         return JWT.decode(token).getExpiresAt();
+    }
+
+    public static Date getRefreshDate(String token) {
+        return JwtUtils.getClaimFromJWT(JWT_REFRESH_FLAG, token).asDate();
     }
 }

@@ -30,6 +30,8 @@ public abstract class JwtUtils {
 
     public static final String JWT_AUTH_FLAG = "auth";
 
+    public static final String JWT_REFRESH_FLAG = "refresh";
+
     public static Long JWT_REFRESH_EXPIRE_TIME_FLAG = 300000L;
 
 
@@ -56,11 +58,14 @@ public abstract class JwtUtils {
             result.add(grantedAuthority.getAuthority());
         }
         Date expireDate = Date.from(LocalDateTime.now().plusSeconds(JWT_EXPIRE_TIME).atZone(ZoneId.systemDefault()).toInstant());
+        Date refreshDate = Date.from(LocalDateTime.now().plusSeconds(JWT_REFRESH_EXPIRE_TIME_FLAG).atZone(ZoneId.systemDefault()).toInstant());
+
         try {
             return JWT.create()
                     .withExpiresAt(expireDate)
                     .withClaim(JWT_NAME_FLAG, principal.getUsername())
-                    .withArrayClaim(JWT_AUTH_FLAG, result.toArray(new String[result.size()]))
+                    .withClaim(JWT_REFRESH_FLAG,refreshDate)
+                    .withArrayClaim(JWT_AUTH_FLAG, result.toArray(new String[0]))
                     .sign(Algorithm.HMAC256(JWT_SECRET_KEY));
         } catch (JWTCreationException jwtCreationException) {
             return null;

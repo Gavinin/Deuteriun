@@ -8,10 +8,29 @@ spring:
     active: local
   main:
     banner-mode: off
+  datasource:
+    hikari:
+      max-lifetime: 0
+
+  redis:
+    timeout: 10000
+    lettuce:
+      pool:
+        max-active: 1000
+        max-idle: 10
+        min-idle: 3
+        max-wait: -1
+
+
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 mybatis-plus:
   mapper-locations: classpath:mybatis/*/*Mapper.xml
   type-aliases-package: com.deuteriun.*.mapper
+  global-config:
+    banner: false
 
 swagger:
   enable: true
@@ -19,11 +38,28 @@ swagger:
   application-version: 1.0
   application-description: Deuteriun API
 
+logging:
+  config: src/main/resources/logback-prod.xml
+
 deuteriun:
-  front-token: TOKEN
+  redis:
+    #    min
+    timeout: 10
+  http-permitall-address-list:
+    - /swagger-ui/**
+    - /swagger-resources/**
+    - /v3/**
+    - /csrf
+    - /login/**
+
+  front-token: Token
+  front-date-format: MM-dd-yyyy HH:mm:ss
+
   jwt-name: username
   jwt-secret-key: changethiskey
-#  min
-  jwt-expire-time: 60
+  #  min
+  jwt-expire-time: 4320
+  #  min
+  jwt-refresh-expire-time: 5
 
 

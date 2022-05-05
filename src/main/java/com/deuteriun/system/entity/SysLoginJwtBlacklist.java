@@ -7,7 +7,9 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
@@ -23,6 +25,7 @@ import lombok.experimental.Accessors;
 @Setter
 @Accessors(chain = true)
 @TableName("sys_login_jwt_blacklist")
+@NoArgsConstructor
 public class SysLoginJwtBlacklist implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -36,5 +39,9 @@ public class SysLoginJwtBlacklist implements Serializable {
 
     private Date createDate;
 
-
+    public SysLoginJwtBlacklist(String userName, String userJwt, Date createDate) {
+        this.userName = userName;
+        this.userJwt = userJwt;
+        this.createDate = createDate;
+    }
 }

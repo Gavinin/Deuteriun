@@ -2,8 +2,8 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/deuteriun?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&openSSL=false
-#    username: deuteriun
-#    password: Dt#842196
+    #    username: deuteriun
+    #    password: Dt#842196
     username: root
     password: Gavin&084282
 
@@ -12,11 +12,10 @@ spring:
     host: dev.gvw.asia
     port: 8879
     database: 1
-    password: Gavin&084282
+    password: Gavin&96
 
-mybatis:
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
 
 #mybatis-generator:
 #  data-source: jdbc:mysql://dev.gvw.asia:8836/deuteriun

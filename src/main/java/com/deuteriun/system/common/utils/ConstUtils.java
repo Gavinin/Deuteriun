@@ -1,15 +1,14 @@
 package com.deuteriun.system.common.utils;
 
-import org.springframework.beans.factory.InitializingBean;
+import com.deuteriun.system.db.redis.RedisServiceImpl;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 
 @Component
-public class ConstUtils implements InitializingBean {
+public class ConstUtils {
 
     @Value("${deuteriun.front-token}")
     private String frontToken;
@@ -17,14 +16,18 @@ public class ConstUtils implements InitializingBean {
     @Value("${deuteriun.front-date-format}")
     private String frontDateFormat;
 
+    @Value("${deuteriun.redis.timeout}")
+    private Long redisTimOut;
+
     public static String FRONT_TOKEN;
 
     public static SimpleDateFormat DATE_TIME_FORMAT;
 
-    @Override
-    public void afterPropertiesSet() throws Exception {
+    @PostConstruct
+    public void postConstruct() {
         FRONT_TOKEN = frontToken;
         DATE_TIME_FORMAT = new SimpleDateFormat(frontDateFormat);
+        RedisServiceImpl.REDIS_TIME_OUT = redisTimOut * 60;
     }
 
 

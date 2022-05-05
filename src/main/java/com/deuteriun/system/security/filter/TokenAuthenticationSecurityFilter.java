@@ -1,11 +1,10 @@
 package com.deuteriun.system.security.filter;
 
-import com.auth0.jwt.JWT;
 import com.deuteriun.system.common.enums.ReturnStatus;
+import com.deuteriun.system.common.utils.DeuteriunJwtUtils;
 import com.deuteriun.system.common.utils.Result;
 import com.deuteriun.system.common.utils.ServletUtil;
 import com.deuteriun.system.db.CacheService;
-import com.deuteriun.system.common.utils.DeuteriunJwtUtils;
 import com.deuteriun.system.entity.SysLoginJwtBlacklist;
 import com.deuteriun.system.security.entity.SecurityUser;
 import com.deuteriun.system.security.service.SecurityService;
@@ -44,7 +43,7 @@ public class TokenAuthenticationSecurityFilter extends OncePerRequestFilter {
     /**
      * Modify Filter
      * <p>
-     * 使用Redis 存储在线用户，如果用户Logout，将重写Redis信息为:Logout，
+     * 使用Redis 存储在线用户，如果用户Logout 存入BlackList，
      *
      * @param request
      * @param response
@@ -71,17 +70,20 @@ public class TokenAuthenticationSecurityFilter extends OncePerRequestFilter {
                 SecurityContext context = SecurityContextHolder.getContext();
                 context.setAuthentication(authentication);
             } else {
-
+                //Check token weather in blacklist
                 SysLoginJwtBlacklist list = sysLoginJwtBlacklistService.listByuserNameAndToken(username, token);
-                //Not Logout
+                //IF token is not in blacklist,means user NOT Logout
                 if (list == null) {
                     //paras TOKEN for Expire Date
                     Date expireDate = DeuteriunJwtUtils.getExpireDate(token);
+                    Date refreshDate = DeuteriunJwtUtils.getRefreshDate(token);
                     Date currentDate = new Date();
+                    SecurityUser securityUser = securityService.getUserDetailByName(username);
                     if (currentDate.after(expireDate)) {
-                        //Date not expire
-
-                        SecurityUser securityUser = securityService.getUserDetailByName(username);
+                        //Date has expire
+                        sysLoginJwtBlacklistService.save(new SysLoginJwtBlacklist(securityUser.getUsername(), token, new Date()));
+                    } else if (currentDate.after(refreshDate) && currentDate.before(expireDate)) {
+                        //if Date not expire
                         if (SecurityContextHolder.getContext().getAuthentication() == null) {
                             if (DeuteriunJwtUtils.validateToken(token)) {
                                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(securityUser.getUsername(), null, securityUser.getAuthorities());
@@ -90,6 +92,8 @@ public class TokenAuthenticationSecurityFilter extends OncePerRequestFilter {
 
                                 //refresh JWT token expire date
                                 String jwt = DeuteriunJwtUtils.generateJWT(authentication);
+                                //Refresh cache service
+                                cacheService.put(securityUser.getUsername(),jwt);
                                 Result success;
                                 success = Result.success(jwt, request.getServletPath());
                                 ServletUtil.render(response, success);
@@ -97,7 +101,7 @@ public class TokenAuthenticationSecurityFilter extends OncePerRequestFilter {
                         }
 
                     } else {
-                        //need relaunch
+                        //If user has logout, need relaunch
                         ServletUtil.render(request, response, Result.error(ReturnStatus.USER_NOT_LOGIN));
                         return;
                     }

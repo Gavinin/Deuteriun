@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="120 seconds">
+    <logger name="io.lettuce.core.protocol" level="ERROR"/>
+    <logger name="io.lettuce.core" level="ERROR"/>
+
+    <property name="log.moduleName" value="temporary.construction"/>
+    <property name="log.max.size" value="200MB"/>
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder charset="UTF-8">
+            <pattern>%d %-5p %c-%L [%t] - %m%n</pattern>
+        </encoder>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{32}.%M\(%F:%L\) %thread %X{system} %X{app} %X{host}:%X{port}] %msg%n
+            </pattern>
+        </layout>
+    </appender>
+
+    <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/${log.moduleName}_log.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/${log.moduleName}_log_%d{yyyy-MM-dd_HH}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder charset="UTF-8">
+            <pattern>%d %-5p %c-%L [%t] - %m%n</pattern>
+        </encoder>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{32}.%M\(%F:%L\) %thread %X{system} %X{app} %X{host}:%X{port}] %msg%n
+            </pattern>
+        </layout>
+    </appender>
+
+
+    <root level="INFO">
+        <appender-ref ref="console"/>
+        <appender-ref ref="file"/>
+    </root>
+</configuration>
