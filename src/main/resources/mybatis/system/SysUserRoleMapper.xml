@@ -12,7 +12,7 @@
         from (select id, role_id, sys_user_id, create_role_user_id, create_date
               from sys_user_role
               where sys_user_id = #{userId}) as su
-                 inner join sys_role as sr on su.role_id = sr.id
+                 inner join sys_role_code as sr on su.role_id = sr.id
 
     </select>
 

@@ -1,9 +1,8 @@
 package com.deuteriun.system.security.conf;
 
-import com.deuteriun.system.common.enums.ReturnStatus;
-import com.deuteriun.system.common.utils.Result;
-import com.deuteriun.system.common.utils.ServletUtil;
-import org.springframework.context.annotation.Bean;
+import com.deuteriun.common.enums.ReturnStatus;
+import com.deuteriun.common.utils.Result;
+import com.deuteriun.system.utils.ServletUtil;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.AuthenticationException;
@@ -31,7 +30,7 @@ public class RestAuthenticateFailureImpl implements AuthenticationFailureHandler
         } else if (exception.getCause() instanceof CredentialsExpiredException) {
             result = new Result(ReturnStatus.USER_PASSWORD_EXPIRED);
         } else {
-            result = new Result(ReturnStatus.USER_UNKNOWN_ERROR);
+            result = new Result(ReturnStatus.SYSTEM_UNKNOWN_ERROR);
         }
         ServletUtil.render(response, result);
 

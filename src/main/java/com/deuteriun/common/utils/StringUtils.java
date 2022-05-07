@@ -1,4 +1,4 @@
-package com.deuteriun.system.common.utils;
+package com.deuteriun.common.utils;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

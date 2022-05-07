@@ -1,4 +1,4 @@
-package com.deuteriun.system.common.utils;
+package com.deuteriun.system.utils;
 
 import org.springframework.stereotype.Component;
 

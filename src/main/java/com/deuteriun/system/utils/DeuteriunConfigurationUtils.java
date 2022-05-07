@@ -1,4 +1,4 @@
-package com.deuteriun.system.common.utils;
+package com.deuteriun.system.utils;
 
 
 import lombok.Data;
@@ -11,8 +11,6 @@ import java.util.List;
 @Component
 @ConfigurationProperties(prefix = "deuteriun")
 public class DeuteriunConfigurationUtils {
-
-
 
     List<String> httpPermitAllAddressList;
 

@@ -5,6 +5,9 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -41,21 +44,27 @@ public class SysUser implements Serializable {
     /**
      * jwt key
      */
+    @JsonIgnore
     private String password;
 
+    @JsonIgnore
     private LocalDateTime createDate;
 
+    @JsonIgnore
     private LocalDateTime modifyDate;
 
     /**
      * User weather be deleted
      */
+    @JsonIgnore
     private Boolean del;
 
     /**
      * User has been deleted
      */
+    @JsonIgnore
     private Boolean ban;
+
 
 
 }

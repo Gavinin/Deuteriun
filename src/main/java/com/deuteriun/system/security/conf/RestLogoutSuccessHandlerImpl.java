@@ -1,12 +1,11 @@
 package com.deuteriun.system.security.conf;
 
-import com.deuteriun.system.common.enums.WebStatus;
-import com.deuteriun.system.common.utils.DeuteriunJwtUtils;
-import com.deuteriun.system.common.utils.Result;
-import com.deuteriun.system.common.utils.ServletUtil;
-import com.deuteriun.system.db.CacheService;
+import com.deuteriun.common.enums.WebStatus;
+import com.deuteriun.system.utils.DeuteriunJwtUtils;
+import com.deuteriun.common.utils.Result;
+import com.deuteriun.system.utils.ServletUtil;
+import com.deuteriun.system.cache.CacheService;
 import com.deuteriun.system.entity.SysLoginJwtBlacklist;
-import com.deuteriun.system.security.entity.SecurityUser;
 import com.deuteriun.system.service.SysLoginJwtBlacklistService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
 
-import static com.deuteriun.system.common.enums.ReturnStatus.LOGOUT_SUCCESS;
+import static com.deuteriun.common.enums.ReturnStatus.SYSTEM_LOGOUT_SUCCESS;
+
 
 @Configuration
 public class RestLogoutSuccessHandlerImpl implements LogoutSuccessHandler {
@@ -41,7 +41,7 @@ public class RestLogoutSuccessHandlerImpl implements LogoutSuccessHandler {
         sysLoginJwtBlacklist.setUserJwt(token);
         sysLoginJwtBlacklistService.save(sysLoginJwtBlacklist);
 
-        Result result = new Result(LOGOUT_SUCCESS);
+        Result result = new Result(SYSTEM_LOGOUT_SUCCESS);
         response.setContentType(WebStatus.CONTENT_TYPE);
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.writeValue(response.getWriter(), result);

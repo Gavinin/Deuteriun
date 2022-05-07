@@ -1,7 +1,8 @@
 package com.deuteriun.system.security.filter;
 
-import com.deuteriun.system.entity.LoginInfoDTO;
+import com.deuteriun.system.entity.LoginDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -29,13 +30,16 @@ public class JwtAuthenticationSecurityFilter extends AbstractAuthenticationProce
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException {
 
-        if (POST_ONLY &&  !request.getMethod().equals(HTTP_METHOD_POST)){
+        if (POST_ONLY && !request.getMethod().equals(HTTP_METHOD_POST)) {
             throw new AuthenticationServiceException("Authentication method not supported: " + request.getMethod());
         }
-
-        LoginInfoDTO loginInfo = new ObjectMapper().readValue(request.getInputStream(), LoginInfoDTO.class);
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginInfo.getUsername(), loginInfo.getPassword());
-        return getAuthenticationManager().authenticate(authenticationToken);
+        try {
+            LoginDTO loginInfo = new ObjectMapper().readValue(request.getInputStream(), LoginDTO.class);
+            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginInfo.getUsername(), loginInfo.getPassword());
+            return getAuthenticationManager().authenticate(authenticationToken);
+        } catch (UnrecognizedPropertyException unrecognizedPropertyException) {
+            return null;
+        }
     }
 
 }

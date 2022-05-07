@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * <p>
- *  Mapper 接口
+ * Mapper 接口
  * </p>
  *
  * @author Gavinin
@@ -13,9 +13,9 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface SysLoginJwtBlacklistMapper extends BaseMapper<SysLoginJwtBlacklist> {
 
-     SysLoginJwtBlacklist listByuserNameAndToken(String userName, String token);
+    SysLoginJwtBlacklist listByuserNameAndToken(String userName, String token);
 
-     SysLoginJwtBlacklist listByuserName(String userName);
+    SysLoginJwtBlacklist listByuserName(String userName);
 
     Boolean deleteByUserName(String userName);
 }

@@ -1,4 +1,4 @@
-package com.deuteriun.system.common.utils;
+package com.deuteriun.system.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;
@@ -9,6 +9,9 @@ import java.io.IOException;
 
 public class ServletUtil {
 
+    public static final String FRONT_TOKEN = "Token";
+
+
     /**
      * Get Token From Http request , with 2 side, header or address parameter
      *
@@ -17,9 +20,9 @@ public class ServletUtil {
      */
     public static String getTokenFromHttpRequest(HttpServletRequest request) {
 
-        String token = request.getHeader(ConstUtils.FRONT_TOKEN);
+        String token = request.getHeader(FRONT_TOKEN);
         if (StringUtils.isBlank(token)) {
-            token = request.getParameter(ConstUtils.FRONT_TOKEN);
+            token = request.getParameter(FRONT_TOKEN);
         }
         return token;
     }

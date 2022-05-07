@@ -24,7 +24,7 @@ import java.util.List;
 public abstract class JwtUtils {
     public static String JWT_SECRET_KEY = "dh89hsd9hc9hscdug72u98mxcn39ncm34gq89nq3cg347nq";
 
-    private static Long JWT_EXPIRE_TIME = 300000L;
+    public static Long JWT_EXPIRE_TIME = 300000L;
 
     public static final String JWT_NAME_FLAG = "username";
 
@@ -34,24 +34,7 @@ public abstract class JwtUtils {
 
     public static Long JWT_REFRESH_EXPIRE_TIME_FLAG = 300000L;
 
-
-    @Value("${deuteriun.jwt-secret-key}")
-    private static void setJwtSecretKey(String jwtSecretKey) {
-        JWT_SECRET_KEY = jwtSecretKey;
-    }
-
-    @Value("${deuteriun.jwt-expire-time}")
-    private static void setJwtExpireTime(Long jwtExpireTime) {
-        JWT_EXPIRE_TIME = jwtExpireTime * 60 * 1000;
-    }
-
-    @Value("${deuteriun.jwt-refresh-expire-time}")
-    private static void setJwtRefreshExpireTimeFlag(Long jwtRefreshExpireTimeFlag) {
-        JWT_REFRESH_EXPIRE_TIME_FLAG = jwtRefreshExpireTimeFlag * 60 * 1000;
-    }
-
-    public static String generateJWT(Authentication authentication) {
-        SecurityUser principal = (SecurityUser) authentication.getPrincipal();
+    public static String generateJWT(SecurityUser principal) {
         List<GrantedAuthority> grantedAuthorityList = principal.getGrantedAuthorityList();
         List<String> result = new LinkedList<>();
         for (GrantedAuthority grantedAuthority : grantedAuthorityList) {

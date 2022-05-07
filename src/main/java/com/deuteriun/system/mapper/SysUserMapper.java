@@ -1,7 +1,9 @@
 package com.deuteriun.system.mapper;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.deuteriun.system.entity.SysUser;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -17,6 +19,6 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
 
     SysUser getUserByName(String userName);
 
-    List<SysUser> getUsersByNames(List<String> index);
+    IPage<SysUser> getUsersByNames(IPage<SysUser> page, List<String> index);
 
 }

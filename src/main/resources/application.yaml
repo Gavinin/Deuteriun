@@ -52,10 +52,6 @@ deuteriun:
     - /csrf
     - /login/**
 
-  front-token: Token
-  front-date-format: MM-dd-yyyy HH:mm:ss
-
-  jwt-name: username
   jwt-secret-key: changethiskey
   #  min
   jwt-expire-time: 4320

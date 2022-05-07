@@ -1,4 +1,4 @@
-package com.deuteriun.system.db;
+package com.deuteriun.system.cache;
 
 public interface CacheService extends NoSqlInterface {
 

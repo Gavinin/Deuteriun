@@ -1,4 +1,4 @@
-package com.deuteriun.system.mbg.config;
+package com.deuteriun.system.config.mbg.config;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

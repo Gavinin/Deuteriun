@@ -1,9 +1,9 @@
 package com.deuteriun.system.security.conf;
 
-import com.deuteriun.system.common.utils.Result;
-import com.deuteriun.system.common.utils.ServletUtil;
-import com.deuteriun.system.common.utils.DeuteriunJwtUtils;
-import com.deuteriun.system.db.CacheService;
+import com.deuteriun.common.utils.Result;
+import com.deuteriun.system.utils.ServletUtil;
+import com.deuteriun.system.utils.DeuteriunJwtUtils;
+import com.deuteriun.system.cache.CacheService;
 import com.deuteriun.system.entity.SysLoginJwtBlacklist;
 import com.deuteriun.system.security.entity.SecurityUser;
 import com.deuteriun.system.service.SysLoginJwtBlacklistService;
@@ -30,7 +30,7 @@ public class RestAuthenticateSuccessImpl implements AuthenticationSuccessHandler
         SecurityUser securityUser = new SecurityUser();
         securityUser.setUsername(principal.getUsername());
         securityUser.setGrantedAuthorityList(principal.getGrantedAuthorityList());
-        String jwt = DeuteriunJwtUtils.generateJWT(authentication);
+        String jwt = DeuteriunJwtUtils.generateJWT(securityUser);
         //Reset logout blacklist
         SysLoginJwtBlacklist sysLoginJwtBlacklist = sysLoginJwtBlacklistService.listByuserName(principal.getUsername());
         if (sysLoginJwtBlacklist != null) {

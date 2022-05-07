@@ -1,10 +1,10 @@
-package com.deuteriun.system.mbg;
+package com.deuteriun.system.config.mbg;
 
 import com.baomidou.mybatisplus.generator.FastAutoGenerator;
 import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
 import com.baomidou.mybatisplus.generator.config.converts.MySqlTypeConvert;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
-import com.deuteriun.system.mbg.config.MybatisGeneratorConfig;
+import com.deuteriun.system.config.mbg.config.MybatisGeneratorConfig;
 import org.springframework.stereotype.Component;
 
 @Component

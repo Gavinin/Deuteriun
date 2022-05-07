@@ -1,18 +1,28 @@
-package com.deuteriun.system.db.redis;
+package com.deuteriun.system.cache.redis;
 
-import com.deuteriun.system.db.CacheService;
-import com.deuteriun.system.db.NoSqlInterface;
+import com.deuteriun.system.cache.CacheService;
+import com.deuteriun.system.cache.NoSqlInterface;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.util.concurrent.TimeUnit;
 
 @Service
 public class RedisServiceImpl implements CacheService, NoSqlInterface {
 
+    @Value("${deuteriun.redis.timeout}")
+    private Long redisTimOut;
+
     public static Long REDIS_TIME_OUT = 60 * 10L;
+
+    @PostConstruct
+    public void postConstruct() {
+        RedisServiceImpl.REDIS_TIME_OUT = redisTimOut * 60;
+    }
+
 
     @Resource
     private RedisTemplate<String, String> redisTemplate;

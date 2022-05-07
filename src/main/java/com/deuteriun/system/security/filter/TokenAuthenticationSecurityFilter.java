@@ -1,10 +1,10 @@
 package com.deuteriun.system.security.filter;
 
-import com.deuteriun.system.common.enums.ReturnStatus;
-import com.deuteriun.system.common.utils.DeuteriunJwtUtils;
-import com.deuteriun.system.common.utils.Result;
-import com.deuteriun.system.common.utils.ServletUtil;
-import com.deuteriun.system.db.CacheService;
+import com.deuteriun.common.enums.ReturnStatus;
+import com.deuteriun.system.utils.DeuteriunJwtUtils;
+import com.deuteriun.common.utils.Result;
+import com.deuteriun.system.utils.ServletUtil;
+import com.deuteriun.system.cache.CacheService;
 import com.deuteriun.system.entity.SysLoginJwtBlacklist;
 import com.deuteriun.system.security.entity.SecurityUser;
 import com.deuteriun.system.security.service.SecurityService;
@@ -82,21 +82,18 @@ public class TokenAuthenticationSecurityFilter extends OncePerRequestFilter {
                     if (currentDate.after(expireDate)) {
                         //Date has expire
                         sysLoginJwtBlacklistService.save(new SysLoginJwtBlacklist(securityUser.getUsername(), token, new Date()));
-                    } else if (currentDate.after(refreshDate) && currentDate.before(expireDate)) {
+                    } else if (currentDate.before(refreshDate)) {
                         //if Date not expire
                         if (SecurityContextHolder.getContext().getAuthentication() == null) {
                             if (DeuteriunJwtUtils.validateToken(token)) {
-                                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(securityUser.getUsername(), null, securityUser.getAuthorities());
-                                SecurityContext context = SecurityContextHolder.getContext();
-                                context.setAuthentication(authentication);
-
                                 //refresh JWT token expire date
-                                String jwt = DeuteriunJwtUtils.generateJWT(authentication);
+                                String jwt = DeuteriunJwtUtils.generateJWT(securityUser);
                                 //Refresh cache service
-                                cacheService.put(securityUser.getUsername(),jwt);
+                                cacheService.put(securityUser.getUsername(), jwt);
                                 Result success;
                                 success = Result.success(jwt, request.getServletPath());
                                 ServletUtil.render(response, success);
+                                return;
                             }
                         }
 
@@ -107,13 +104,10 @@ public class TokenAuthenticationSecurityFilter extends OncePerRequestFilter {
                     }
 
                 } else {
-                    ServletUtil.render(request, response, Result.error(ReturnStatus.LOGOUT_SUCCESS));
+                    ServletUtil.render(request, response, Result.error(ReturnStatus.SYSTEM_LOGOUT_SUCCESS));
                     return;
                 }
-
-
             }
-
         }
         filterChain.doFilter(request, response);
     }

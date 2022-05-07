@@ -1,4 +1,4 @@
-package com.deuteriun.system.swagger;
+package com.deuteriun.system.config.swagger;
 
 import io.swagger.annotations.ApiOperation;
 import lombok.Data;

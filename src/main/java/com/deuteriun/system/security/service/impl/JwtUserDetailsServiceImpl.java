@@ -1,6 +1,6 @@
 package com.deuteriun.system.security.service.impl;
 
-import com.deuteriun.system.common.utils.StringUtils;
+import com.deuteriun.common.utils.StringUtils;
 import com.deuteriun.system.security.entity.SecurityUser;
 import com.deuteriun.system.security.service.SecurityService;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -1,6 +1,7 @@
-package com.deuteriun.system.common.utils;
+package com.deuteriun.common.utils;
 
-import com.deuteriun.system.common.enums.ReturnStatus;
+import com.deuteriun.common.enums.ReturnStatus;
+import com.deuteriun.system.utils.DateUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,7 +32,7 @@ public class Result {
     public Result(ReturnStatus returnStatus) {
         this.code = returnStatus.getStatusCode();
         this.message = returnStatus.getStatusMessage();
-        this.date = ConstUtils.DATE_TIME_FORMAT.format(new Date());
+        this.date = DateUtils.SYSTEM_DATETIME_FORMATOR.format(new Date());
     }
 
     public static Result success(ReturnStatus status) {
@@ -54,6 +55,12 @@ public class Result {
 
     public static Result error(ReturnStatus returnStatus, Object data) {
         Result result = new Result(returnStatus);
+        result.setBody(data);
+        return result;
+    }
+
+    public static Result error(Object data) {
+        Result result = new Result(ReturnStatus.ERROR);
         result.setBody(data);
         return result;
     }

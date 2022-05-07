@@ -18,7 +18,7 @@
         <include refid="Base_Column_List"/>
         from sys_user
         where user_name in
-        <foreach item="item" index="index" collection="list"
+        <foreach item="item" index="index" collection="index"
                  open="(" separator="," close=")">
             #{item}
         </foreach>

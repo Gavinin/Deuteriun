@@ -1,4 +1,4 @@
-package com.deuteriun.system.common.enums;
+package com.deuteriun.common.enums;
 
 
 public  class WebStatus {
