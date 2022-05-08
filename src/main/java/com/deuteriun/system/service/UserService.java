@@ -2,6 +2,7 @@ package com.deuteriun.system.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.deuteriun.system.entity.SysUser;
+import com.deuteriun.system.entity.SysRole;
 import com.deuteriun.system.mapper.SysUserMapper;
 
 import javax.annotation.Resource;
@@ -21,5 +22,9 @@ public interface UserService  {
 
     Boolean add(SysUser user);
 
+    Boolean update(SysUser user);
 
+    Boolean del(SysUser user);
+
+    List<SysRole> getUserRoles();
 }

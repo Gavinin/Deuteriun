@@ -37,16 +37,17 @@ public class GlobalExceptionHandler {
 
     //JSON转换异常
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public Result jsonError(HttpMessageNotReadableException e ,HttpServletRequest req, HttpServletResponse res) {
+    public Result jsonError(HttpMessageNotReadableException e, HttpServletRequest req, HttpServletResponse res) {
         logger.error(e.getMessage());
         return Result.error(ReturnStatus.SYSTEM_JSON_ERROR);
     }
-//
-//    //未登录异常
-//    @ExceptionHandler(AuthorizationException.class)
-//    public Result unLogin(HttpServletRequest req, HttpServletResponse res) {
-//        return Result.error(ReturnStatus.USER_NOT_LOGIN);
-//    }
+
+    //自定义异常
+    @ExceptionHandler(BaseException.class)
+    public Result unLogin(BaseException e, HttpServletRequest req, HttpServletResponse res) {
+        logger.warn(e.getMessage(), e.getCause());
+        return Result.error(ReturnStatus.ERROR, e.getMessage());
+    }
 
     //其它异常
     @ExceptionHandler(Exception.class)

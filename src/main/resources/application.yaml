@@ -44,7 +44,7 @@ logging:
 deuteriun:
   redis:
     #    min
-    timeout: 10
+    timeout: 30
   http-permitall-address-list:
     - /swagger-ui/**
     - /swagger-resources/**

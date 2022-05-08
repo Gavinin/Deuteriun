@@ -20,16 +20,20 @@ public class RestAuthenticateFailureImpl implements AuthenticationFailureHandler
         Result result;
         if (exception.getCause() instanceof LockedException) {
             result = new Result(ReturnStatus.USER_ACCOUNT_LOCKED);
-
-        } else if (exception.getCause() instanceof BadCredentialsException) {
+        }
+        else if (exception.getCause() instanceof BadCredentialsException) {
             result = new Result(ReturnStatus.USER_PASSWORD_ERROR);
-        } else if (exception.getCause() instanceof DisabledException) {
+        }
+        else if (exception.getCause() instanceof DisabledException) {
             result = new Result(ReturnStatus.USER_ACCOUNT_DISABLE);
-        } else if (exception.getCause() instanceof AccountExpiredException) {
+        }
+        else if (exception.getCause() instanceof AccountExpiredException) {
             result = new Result(ReturnStatus.USER_ACCOUNT_EXPIRED);
-        } else if (exception.getCause() instanceof CredentialsExpiredException) {
+        }
+        else if (exception.getCause() instanceof CredentialsExpiredException) {
             result = new Result(ReturnStatus.USER_PASSWORD_EXPIRED);
-        } else {
+        }
+        else {
             result = new Result(ReturnStatus.SYSTEM_UNKNOWN_ERROR);
         }
         ServletUtil.render(response, result);

@@ -1,10 +1,13 @@
 package com.deuteriun.system.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
@@ -14,7 +17,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author Gavinin
@@ -62,9 +65,10 @@ public class SysUser implements Serializable {
     /**
      * User has been deleted
      */
-    @JsonIgnore
     private Boolean ban;
 
+    @TableField(exist = false)
+    private List<SysRole> sysRoleList;
 
 
 }

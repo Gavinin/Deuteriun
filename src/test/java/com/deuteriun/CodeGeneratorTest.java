@@ -24,7 +24,7 @@ public class CodeGeneratorTest {
         mybatisGeneratorConfig.setDatabaseUser("root");
         mybatisGeneratorConfig.setDatabasePassword("Gavin&084282");
         mybatisGeneratorConfig.setParentPackageName("com.deuteriun.system");
-        mybatisGeneratorConfig.setTables(Arrays.asList("sys_login_jwt_blacklist".split(",")));
+        mybatisGeneratorConfig.setTables(Arrays.asList("sys_role".split(",")));
 
         new MybatisGenerator().generatorCode(mybatisGeneratorConfig);
 

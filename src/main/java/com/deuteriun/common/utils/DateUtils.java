@@ -1,4 +1,4 @@
-package com.deuteriun.system.utils;
+package com.deuteriun.common.utils;
 
 import com.deuteriun.system.cache.redis.RedisServiceImpl;
 import org.springframework.beans.factory.annotation.Value;

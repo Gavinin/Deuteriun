@@ -32,9 +32,12 @@ public class RestLogoutSuccessHandlerImpl implements LogoutSuccessHandler {
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
 
+        //del user from cache service
         String token = ServletUtil.getTokenFromHttpRequest(request);
         String username = DeuteriunJwtUtils.getUsernameFromJWT(token);
         cacheService.delete(username);
+
+        //Save this token to sys_login_jwt_blacklist
         SysLoginJwtBlacklist sysLoginJwtBlacklist = new SysLoginJwtBlacklist();
         sysLoginJwtBlacklist.setCreateDate(new Date());
         sysLoginJwtBlacklist.setUserName(username);

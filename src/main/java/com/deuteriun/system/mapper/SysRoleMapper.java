@@ -1,6 +1,6 @@
 package com.deuteriun.system.mapper;
 
-import com.deuteriun.system.entity.SysRoleCode;
+import com.deuteriun.system.entity.SysRole;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -9,8 +9,9 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author Gavinin
- * @since 2022-04-01
+ * @since 2022-05-09
  */
-public interface SysRoleCodeMapper extends BaseMapper<SysRoleCode> {
+public interface SysRoleMapper extends BaseMapper<SysRole> {
+
 
 }

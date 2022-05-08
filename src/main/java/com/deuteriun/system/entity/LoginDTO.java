@@ -1,6 +1,6 @@
 package com.deuteriun.system.entity;
 
-import com.deuteriun.system.utils.DateUtils;
+import com.deuteriun.common.utils.DateUtils;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
