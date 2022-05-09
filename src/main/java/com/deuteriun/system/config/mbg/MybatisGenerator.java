@@ -22,7 +22,7 @@ public class MybatisGenerator {
                     // 设置作者
                     builder.author(mybatisGeneratorConfig.getAuthor())
                             // 开启 swagger 模式
-                            // .enableSwagger()
+                             .enableSwagger()
                             // 执行完毕不打开文件夹
                             .disableOpenDir()
                             // 覆盖已生成文件

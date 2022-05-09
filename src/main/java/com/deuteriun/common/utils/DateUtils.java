@@ -18,6 +18,7 @@ public class DateUtils {
 
     public static final String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
     public static final String DATE_FORMAT = "yyyy-MM-dd";
+    public static final String DATE_FORMAT_SIMPLE = "yyyy-MM-dd";
     public static final String TIME_FORMAT = "HH:mm:ss";
 
     public static final SimpleDateFormat SYSTEM_DATETIME_FORMATOR = new SimpleDateFormat(DATE_TIME_FORMAT);
@@ -31,9 +32,22 @@ public class DateUtils {
         return String.valueOf(Instant.now().toEpochMilli());
     }
 
-    public static LocalDateTime currentDate(){
+    public static LocalDateTime currentDate() {
         return LocalDateTime.now();
     }
+
+    public static String currentYearStr() {
+        return LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy"));
+    }
+
+    public static String currentMonthStr() {
+        return LocalDate.now().format(DateTimeFormatter.ofPattern("MM"));
+    }
+
+    public static String currentDayStr() {
+        return LocalDate.now().format(DateTimeFormatter.ofPattern("dd"));
+    }
+
 
     /**
      * current system date（yyyy-MM-dd）
@@ -42,6 +56,10 @@ public class DateUtils {
      */
     public static String currentDateStr() {
         return LocalDate.now().format(DateTimeFormatter.ofPattern(DATE_FORMAT));
+    }
+
+    public static String currentDateStr(String dateFormat) {
+        return LocalDate.now().format(DateTimeFormatter.ofPattern(dateFormat));
     }
 
     /**
