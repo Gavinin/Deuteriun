@@ -34,7 +34,7 @@ public class AuthorityManageController {
     @GetMapping("/list")
     @PreAuthorize(value = "hasAuthority('SYS_USER') AND hasAuthority('AUTH_MANAGE')")
     Result list(@RequestBody AutorityManageDTO autorityManageDTO) {
-        Collection<SimpleGrantedAuthority> authorities = SecurityUtils.getAuthorities();
+        Collection<SimpleGrantedAuthority> authorities = SecurityUtils.getAllAuthorities();
         return Result.success(authorities);
     }
 

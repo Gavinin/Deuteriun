@@ -16,7 +16,7 @@ public class SecurityUtils {
         return !(authentication instanceof AnonymousAuthenticationToken) ? authentication : null;
     }
 
-    public static Collection<SimpleGrantedAuthority> getAuthorities() {
+    public static Collection<SimpleGrantedAuthority> getAllAuthorities() {
 
         return (Collection<SimpleGrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
     }

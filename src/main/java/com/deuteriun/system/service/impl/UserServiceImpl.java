@@ -51,12 +51,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<SysUser> listAllUsers() {
-        return sysUserMapper.selectList(new QueryWrapper<>());
+        return sysUserMapper.selectList(new QueryWrapper<SysUser>().eq("del",0));
     }
 
     @Override
     public List<SysUser> findAllUser(IPage<SysUser> page) {
-        IPage<SysUser> sysUserIPage = sysUserMapper.selectPage(page, new QueryWrapper<>());
+        IPage<SysUser> sysUserIPage = sysUserMapper.selectPage(page, new QueryWrapper<SysUser>().eq("eq",0));
         List<SysUser> records = null;
         if (sysUserIPage != null) {
             records = sysUserIPage.getRecords();

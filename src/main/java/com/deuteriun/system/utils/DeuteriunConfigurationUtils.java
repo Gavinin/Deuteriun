@@ -14,4 +14,7 @@ public class DeuteriunConfigurationUtils {
 
     List<String> httpPermitAllAddressList;
 
+
+    List<String> allowSuffix;
+
 }

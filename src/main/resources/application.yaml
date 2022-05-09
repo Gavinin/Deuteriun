@@ -44,6 +44,9 @@ logging:
 deuteriun:
   files:
     position: /
+    allow-suffix:
+      - jpg
+      - svg
 
   redis:
     #    min

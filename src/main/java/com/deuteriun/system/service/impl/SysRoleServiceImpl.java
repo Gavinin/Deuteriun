@@ -69,7 +69,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
                 throw new AuthorException("权限已经存在");
             }
             //Check if the authority is in the authority list
-            Collection<SimpleGrantedAuthority> authorities = SecurityUtils.getAuthorities();
+            Collection<SimpleGrantedAuthority> authorities = SecurityUtils.getAllAuthorities();
             boolean inAuthList = false;
             for (SimpleGrantedAuthority authority : authorities) {
                 if (authority.getAuthority().equals(sysRole.getRole())) {
@@ -80,7 +80,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
             if (inAuthList) {
                 //Get current operate user info
                 String name = Objects.requireNonNull(SecurityUtils.getAuthentication()).getName();
-                SysUser sysUser1 = sysUserMapper.selectOne(new QueryWrapper<SysUser>().eq("user_name", name));
+                SysUser sysUser1 = sysUserMapper.selectOne(new QueryWrapper<SysUser>().eq("user_name", name).eq("del",0));
                 if (sysUser1 != null) {
                     sysRole.setCreateRoleUserId(sysUser1.getId());
                     sysRole.setCreateDate(DateUtils.currentDate());

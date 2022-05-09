@@ -2,9 +2,11 @@ package com.deuteriun.common.utils;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
+import java.time.LocalDateTime;
 
 /**
  * @ClassName FilesUtils
@@ -19,28 +21,40 @@ public class FilesUtils {
     @Value("${deuteriun.files.position}")
     private String filePosition;
 
-    private static String FILE_POSITION;
+    private static String ROOT_FOLDER_POSITION;
+
+    @Value("${deuteriun.files.allow-suffix}")
+    private String[] allowSuffix;
+
+    private static String[] ALLOW_SUFFIX;
+
 
     @PostConstruct
     public void postConstruct() {
+        ALLOW_SUFFIX = allowSuffix;
+
         if (!filePosition.equals("/")) {
-            FILE_POSITION = filePosition + "/" + "DeuteriunFiles";
+            ROOT_FOLDER_POSITION = filePosition + "/" + "DeuteriunFiles";
         } else
-            FILE_POSITION = System.getProperty("user.dir") + "/" + "DeuteriunFiles";
+            ROOT_FOLDER_POSITION = System.getProperty("user.dir") + "/" + "DeuteriunFiles";
     }
 
-    public static String getFilePosition() {
-        return FILE_POSITION;
+    public static String getRootFolderPosition() {
+        return ROOT_FOLDER_POSITION;
+    }
+
+    public static String getFolderPositionByDate(LocalDateTime localDateTime) {
+        return ROOT_FOLDER_POSITION + "/" + localDateTime.getYear() + "/" + localDateTime.getMonthValue() + "/" + localDateTime.getDayOfMonth();
     }
 
     public static void folderCheck() {
-        File folder = new File(FilesUtils.getFilePosition());
+        File folder = new File(FilesUtils.getRootFolderPosition());
         folderIniter(folder);
-        File year = new File(FilesUtils.getFilePosition() + "/" + DateUtils.currentYearStr());
+        File year = new File(FilesUtils.getRootFolderPosition() + "/" + DateUtils.currentDate().getYear());
         folderIniter(year);
-        File month = new File(FilesUtils.getFilePosition() + "/" + DateUtils.currentYearStr() + "/" + DateUtils.currentMonthStr());
+        File month = new File(FilesUtils.getRootFolderPosition() + "/" + DateUtils.currentDate().getYear() + "/" + DateUtils.currentDate().getMonthValue());
         folderIniter(month);
-        File day = new File(FilesUtils.getFilePosition() + "/" + DateUtils.currentYearStr() + "/" + DateUtils.currentMonthStr() + "/" + DateUtils.currentDayStr());
+        File day = new File(FilesUtils.getRootFolderPosition() + "/" + DateUtils.currentDate().getYear() + "/" + DateUtils.currentDate().getMonthValue() + "/" + DateUtils.currentDate().getDayOfMonth());
         folderIniter(day);
 
     }
@@ -50,4 +64,33 @@ public class FilesUtils {
             folder.mkdirs();
         }
     }
+
+    public static String getSuffix(String originFileName) {
+        if (StringUtils.isNotBlank(originFileName)) {
+            return originFileName.substring(originFileName.lastIndexOf(".") + 1);
+        }
+        return "";
+    }
+
+    public static Boolean checkSuffix(MultipartFile multipartFile) {
+        String suffix = getSuffix(multipartFile.getOriginalFilename());
+        if (StringUtils.isNotBlank(suffix)) {
+            for (String s : FilesUtils.ALLOW_SUFFIX) {
+                if (suffix.equals(s)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+//    /**
+//     * Save File
+//     * @return File path
+//     */
+//    private static String saveFile(File file){
+//
+//    }
+
+
 }

@@ -3,6 +3,8 @@ package com.deuteriun.system.mapper;
 import com.deuteriun.system.entity.SysFiles;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
+import java.util.List;
+
 /**
  * <p>
  *  Mapper 接口
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface SysFilesMapper extends BaseMapper<SysFiles> {
 
+    int batchInsert(List<SysFiles> sysFilesList);
 }
