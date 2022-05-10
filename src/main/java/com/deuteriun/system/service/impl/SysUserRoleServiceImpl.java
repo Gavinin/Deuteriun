@@ -1,10 +1,9 @@
 package com.deuteriun.system.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.deuteriun.system.entity.SysUserRole;
-import com.deuteriun.system.mapper.SysUserMapper;
 import com.deuteriun.system.mapper.SysUserRoleMapper;
 import com.deuteriun.system.service.SysUserRoleService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
@@ -27,9 +26,6 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
     @Resource
     SysUserRoleMapper sysUserRoleMapper;
 
-    @Resource
-    SysUserMapper s;
-
     @Override
     public List<GrantedAuthority> getGrantedAuthorityListById(Long id) {
         List<SysUserRole> maps = sysUserRoleMapper.listAllByUserId(id);
@@ -41,5 +37,21 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
         return grantedAuthorityList;
 
     }
+
+    @Override
+    public List<SysUserRole> listAllByUserIds(List<Long> userList) {
+      return   sysUserRoleMapper.listAllByUserIds(userList);
+    }
+
+    @Override
+    public Boolean add(SysUserRole sysUserRole) {
+        return null;
+    }
+
+    @Override
+    public Boolean delete(SysUserRole sysUserRole) {
+        return null;
+    }
+
 
 }

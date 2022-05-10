@@ -10,4 +10,8 @@ public interface SysUserRoleService {
     List<GrantedAuthority> getGrantedAuthorityListById(Long id);
 
     List<SysUserRole> listAllByUserIds(List<Long> userList);
+
+    Boolean add(SysUserRole sysUserRole);
+
+    Boolean delete(SysUserRole sysUserRole);
 }
