@@ -3,7 +3,7 @@ package com.deuteriun.system.security.service.impl;
 import com.deuteriun.system.entity.SysUser;
 import com.deuteriun.system.security.entity.SecurityUser;
 import com.deuteriun.system.security.service.SecurityService;
-import com.deuteriun.system.service.SysRoleService;
+import com.deuteriun.system.service.SysUserRoleService;
 import com.deuteriun.system.service.SysUserService;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.LockedException;
@@ -19,7 +19,7 @@ public class SecurityServiceImpl implements SecurityService {
     SysUserService sysUserService;
 
     @Resource
-    SysRoleService sysRoleService;
+    SysUserRoleService sysUserRoleService;
 
     @Override
     public SecurityUser getUserDetailByName(String userName) {
@@ -34,7 +34,7 @@ public class SecurityServiceImpl implements SecurityService {
         SecurityUser securityUser = new SecurityUser();
         securityUser.setUsername(sysUser.getUserName());
         securityUser.setPassword(sysUser.getPassword());
-        securityUser.setGrantedAuthorityList(sysRoleService.getGrantedAuthorityListById(sysUser.getId()));
+        securityUser.setGrantedAuthorityList(sysUserRoleService.getGrantedAuthorityListById(sysUser.getId()));
 
         return securityUser;
     }

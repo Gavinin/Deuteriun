@@ -2,20 +2,22 @@ package com.deuteriun.system.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.deuteriun.common.utils.DateUtils;
 import com.deuteriun.common.utils.StringUtils;
-import com.deuteriun.system.entity.SysRoleCode;
+import com.deuteriun.system.entity.SysRole;
 import com.deuteriun.system.entity.SysUser;
 import com.deuteriun.system.entity.SysUserRole;
-import com.deuteriun.system.mapper.SysRoleCodeMapper;
+import com.deuteriun.system.exception.SysException;
+import com.deuteriun.system.exception.UserException;
 import com.deuteriun.system.mapper.SysUserMapper;
-import com.deuteriun.system.mapper.SysUserRoleMapper;
+import com.deuteriun.system.service.SysUserRoleService;
 import com.deuteriun.system.service.UserService;
-import com.deuteriun.system.utils.DateUtils;
 import com.deuteriun.system.utils.SecurityUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -28,10 +30,8 @@ public class UserServiceImpl implements UserService {
     SysUserMapper sysUserMapper;
 
     @Resource
-    SysUserRoleMapper sysUserRoleMapper;
+    SysUserRoleService sysUserRoleService;
 
-    @Resource
-    SysUserRoleMapper sysUserRoleMapper;
 
     @Resource
     PasswordEncoder passwordEncoder;
@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
 
         IPage<SysUser> sysUserIPage = sysUserMapper.selectPage(page, new QueryWrapper<SysUser>().eq("del",0));
         if (sysUserIPage != null) {
-            records = sysUserIPage.getRecords();
+            List<SysUser> records = sysUserIPage.getRecords();
             getRoles(records);
         }
         return null;
@@ -64,21 +64,23 @@ public class UserServiceImpl implements UserService {
 
     private void getRoles(List<SysUser> records) {
         List<Long> userList = new ArrayList<>();
+        //get all id from list
         for (SysUser record : records) {
             userList.add(record.getId());
         }
         if (userList.size() > 0) {
-            List<SysRole> sysRoles = sysRoleService.listAllByUserIds(userList);
-            if (sysRoles.size() > 0) {
+            //get all sys role
+            List<SysUserRole> sysUserRoles = sysUserRoleService.listAllByUserIds(userList);
+            if (sysUserRoles.size() > 0) {
                 for (SysUser record : records) {
-                    List<SysRole> list = new ArrayList<>();
+                    List<SysUserRole> list = new ArrayList<>();
                     Long id = record.getId();
-                    for (SysRole sysRole : sysRoles) {
-                        if (id.equals(sysRole.getSysUserId())) {
-                            list.add(sysRole);
+                    for (SysUserRole sysUserRole : sysUserRoles) {
+                        if (id.equals(sysUserRole.getSysUserId())) {
+                            list.add(sysUserRole);
                         }
                     }
-                    record.setSysRoleList(list);
+                    record.setSysUserRoleList(list);
                 }
             }
         }
@@ -96,7 +98,6 @@ public class UserServiceImpl implements UserService {
         return records;
     }
 
-    public static final String SYS_USER_FLAG = "SYS_USER";
 
     @Override
     public Boolean add(SysUser user) {
@@ -112,11 +113,11 @@ public class UserServiceImpl implements UserService {
         else if (sysUserInDB != null && sysUserInDB.getDel()) {
             //Delete previous user data
             if (sysUserMapper.deleteById(sysUserInDB) > 0) {
-                QueryWrapper<SysRole> eq = new QueryWrapper<SysRole>().eq(SYS_ROLE_TABLE_USER_KEY, sysUserInDB.getId());
-                List<SysRole> SysRoles = sysUserRoleMapper.selectList(eq);
-                if (SysRoles != null) {
+                QueryWrapper<SysUserRole> eq = new QueryWrapper<SysUserRole>().eq(SYS_ROLE_TABLE_USER_KEY, sysUserInDB.getId());
+                List<SysUserRole> sysUserRoleList = sysUserRoleService.selectList(eq);
+                if (sysUserRoleList .size()>0) {
                     //Delete previous role data
-                    sysUserRoleMapper.deleteBatchIds(SysRoles);
+                    sysUserRoleService.deleteBatchIds(sysUserRoleList);
                 }
             }
         }
@@ -129,7 +130,7 @@ public class UserServiceImpl implements UserService {
             sysUserMapper.insert(user);
             SysUser sysUser = sysUserMapper.getUserByName(user.getUserName());
             QueryWrapper<SysRole> role_code = new QueryWrapper<SysRole>().eq("role_code", SYS_USER_FLAG);
-            SysRole sysRole = sysUserRoleMapper.selectOne(role_code);
+            SysRole sysRole = sysUserRoleService.selectOne(role_code);
             if (sysRole != null) {
                 String securityUserName = SecurityUtils.getAuthentication().getName();
                 if (securityUserName != null) {
@@ -139,7 +140,7 @@ public class UserServiceImpl implements UserService {
                             .setSysUserId(sysUser.getId())
                             .setCreateRoleUserId(userByName.getId())
                             .setCreateDate(DateUtils.currentDate());
-                    if (sysUserRoleMapper.insert(sysUserRole) > 0) {
+                    if (sysUserRoleService.insert(sysUserRole) > 0) {
                         return true;
                     }
                 }

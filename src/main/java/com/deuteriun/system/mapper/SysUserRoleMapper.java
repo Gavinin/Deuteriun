@@ -1,7 +1,7 @@
 package com.deuteriun.system.mapper;
 
-import com.deuteriun.system.entity.SysUserRole;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.deuteriun.system.entity.SysUserRole;
 
 import java.util.List;
 
@@ -23,4 +23,5 @@ public interface SysUserRoleMapper extends BaseMapper<SysUserRole> {
     List<SysUserRole> listAllByUserId(Long userId);
 
 
+    List<SysUserRole> listAllByUserIds(List<Long> userList);
 }
