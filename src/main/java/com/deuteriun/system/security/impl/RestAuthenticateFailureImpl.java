@@ -1,4 +1,4 @@
-package com.deuteriun.system.security.conf;
+package com.deuteriun.system.security.impl;
 
 import com.deuteriun.common.enums.ReturnStatus;
 import com.deuteriun.common.utils.Result;
@@ -18,19 +18,19 @@ public class RestAuthenticateFailureImpl implements AuthenticationFailureHandler
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException {
         Result result;
-        if (exception.getCause() instanceof LockedException) {
+        if (exception instanceof LockedException) {
             result = new Result(ReturnStatus.USER_ACCOUNT_LOCKED);
         }
-        else if (exception.getCause() instanceof BadCredentialsException) {
+        else if (exception instanceof BadCredentialsException) {
             result = new Result(ReturnStatus.USER_PASSWORD_ERROR);
         }
-        else if (exception.getCause() instanceof DisabledException) {
+        else if (exception instanceof DisabledException) {
             result = new Result(ReturnStatus.USER_ACCOUNT_DISABLE);
         }
-        else if (exception.getCause() instanceof AccountExpiredException) {
+        else if (exception instanceof AccountExpiredException) {
             result = new Result(ReturnStatus.USER_ACCOUNT_EXPIRED);
         }
-        else if (exception.getCause() instanceof CredentialsExpiredException) {
+        else if (exception instanceof CredentialsExpiredException) {
             result = new Result(ReturnStatus.USER_PASSWORD_EXPIRED);
         }
         else {

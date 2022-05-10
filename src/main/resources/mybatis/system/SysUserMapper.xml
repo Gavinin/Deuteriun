@@ -10,7 +10,7 @@
         select
         <include refid="Base_Column_List"/>
         from sys_user
-        where user_name = #{userName}
+        where user_name = #{userName} and del = 0
     </select>
 
     <select id="getUsersByNames" resultType="com.deuteriun.system.entity.SysUser">
@@ -22,6 +22,7 @@
                  open="(" separator="," close=")">
             #{item}
         </foreach>
+        and and del = 0
     </select>
 
 </mapper>

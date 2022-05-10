@@ -14,13 +14,13 @@ import java.util.List;
 @Component
 public class DeuteriunJwtUtils extends JwtUtils {
 
-    @Value("${deuteriun.jwt-secret-key}")
+    @Value("${deuteriun.jwt.secret-key}")
     private String jwtSecretKey;
 
-    @Value("${deuteriun.jwt-expire-time}")
+    @Value("${deuteriun.jwt.expire-time}")
     private Long jwtExpireTime;
 
-    @Value("${deuteriun.jwt-refresh-expire-time}")
+    @Value("${deuteriun.jwt.refresh-expire-time}")
     private Long jwtRefreshExpireTimeFlag;
 
     @PostConstruct

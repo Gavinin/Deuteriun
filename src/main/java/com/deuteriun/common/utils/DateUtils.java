@@ -1,16 +1,12 @@
-package com.deuteriun.system.utils;
+package com.deuteriun.common.utils;
 
-import com.deuteriun.system.cache.redis.RedisServiceImpl;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 @Component
 public class DateUtils {
@@ -18,6 +14,7 @@ public class DateUtils {
 
     public static final String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
     public static final String DATE_FORMAT = "yyyy-MM-dd";
+    public static final String DATE_FORMAT_SIMPLE = "yyyy-MM-dd";
     public static final String TIME_FORMAT = "HH:mm:ss";
 
     public static final SimpleDateFormat SYSTEM_DATETIME_FORMATOR = new SimpleDateFormat(DATE_TIME_FORMAT);
@@ -31,9 +28,22 @@ public class DateUtils {
         return String.valueOf(Instant.now().toEpochMilli());
     }
 
-    public static LocalDateTime currentDate(){
+    public static LocalDateTime currentDate() {
         return LocalDateTime.now();
     }
+
+    public static String currentYearStr() {
+        return LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy"));
+    }
+
+    public static String currentMonthStr() {
+        return LocalDate.now().format(DateTimeFormatter.ofPattern("MM"));
+    }
+
+    public static String currentDayStr() {
+        return LocalDate.now().format(DateTimeFormatter.ofPattern("dd"));
+    }
+
 
     /**
      * current system date（yyyy-MM-dd）
@@ -42,6 +52,10 @@ public class DateUtils {
      */
     public static String currentDateStr() {
         return LocalDate.now().format(DateTimeFormatter.ofPattern(DATE_FORMAT));
+    }
+
+    public static String currentDateStr(String dateFormat) {
+        return LocalDate.now().format(DateTimeFormatter.ofPattern(dateFormat));
     }
 
     /**

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 public class LogoUtil {
 
     public static void StartLogo() {
-        String logo = "______               _                _               \n" +
+        String logo =
                 "|  _  \\             | |              (_)              \n" +
                 "| | | |  ___  _   _ | |_   ___  _ __  _  _   _  _ __  \n" +
                 "| | | | / _ \\| | | || __| / _ \\| '__|| || | | || '_ \\ \n" +

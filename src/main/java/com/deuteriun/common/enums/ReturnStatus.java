@@ -18,7 +18,11 @@ public enum ReturnStatus {
     SYSTEM_LOGOUT_SUCCESS(2102,"注销成功"),
 
     USER_CREATE_SUCCESSFUL(2211,"用户创建成功"),
+    USER_UPDATE_SUCCESSFUL(2211,"用户更新成功"),
+    USER_DELETE_SUCCESSFUL(2212,"用户删除成功"),
 
+    ROLE_CREATE_SUCCESSFUL(2311,"角色信息添加成功"),
+    ROLE_DELETE_SUCCESSFUL(2311,"角色信息删除成功"),
     /*
      * 3***: Redirect
      */
@@ -43,6 +47,11 @@ public enum ReturnStatus {
     USER_ACCOUNT_LOCKED(4205, "用户账号锁定"),
     USER_ACCOUNT_NOT_EXIST(4206, "用户不存在"),
     USER_CREATE_FAIL(4211,"用户创建失败"),
+    USER_UPDATE_FAIL(4212,"用户更新失败"),
+    USER_DELETE_FAIL(4213,"用户删除失败"),
+
+
+
 
 
     AUTHORITY_ERROR(4300,"权限错误"),

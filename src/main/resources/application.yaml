@@ -42,9 +42,16 @@ logging:
   config: src/main/resources/logback-prod.xml
 
 deuteriun:
+  files:
+    position: /
+    allow-suffix:
+      - jpg
+      - svg
+
   redis:
     #    min
-    timeout: 10
+    timeout: 30
+
   http-permitall-address-list:
     - /swagger-ui/**
     - /swagger-resources/**
@@ -52,10 +59,12 @@ deuteriun:
     - /csrf
     - /login/**
 
-  jwt-secret-key: changethiskey
-  #  min
-  jwt-expire-time: 4320
-  #  min
-  jwt-refresh-expire-time: 5
+  jwt:
+    #  min
+    secret-key: changethiskey
+    expire-time: 4320
+    refresh-expire-time: 5
+
+
 
 

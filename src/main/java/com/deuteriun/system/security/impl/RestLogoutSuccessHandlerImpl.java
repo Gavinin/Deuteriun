@@ -1,4 +1,4 @@
-package com.deuteriun.system.security.conf;
+package com.deuteriun.system.security.impl;
 
 import com.deuteriun.common.enums.WebStatus;
 import com.deuteriun.system.utils.DeuteriunJwtUtils;
