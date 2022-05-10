@@ -1,6 +1,6 @@
 package com.deuteriun.system.service;
 
-import com.deuteriun.system.entity.SysRoleCode;
+import com.deuteriun.system.entity.SysRole;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author Gavinin
- * @since 2022-04-01
+ * @since 2022-05-10
  */
-public interface SysRoleCodeService extends IService<SysRoleCode> {
+public interface SysRoleService extends IService<SysRole> {
 
 }

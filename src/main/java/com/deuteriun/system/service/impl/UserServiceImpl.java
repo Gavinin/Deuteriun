@@ -2,28 +2,20 @@ package com.deuteriun.system.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.deuteriun.common.enums.ReturnStatus;
 import com.deuteriun.common.utils.StringUtils;
-import com.deuteriun.system.entity.SysRoleCode;
+import com.deuteriun.system.entity.SysRole;
 import com.deuteriun.system.entity.SysUser;
 import com.deuteriun.system.entity.SysUserRole;
-import com.deuteriun.system.mapper.SysRoleCodeMapper;
+import com.deuteriun.system.mapper.SysRoleMapper;
 import com.deuteriun.system.mapper.SysUserMapper;
 import com.deuteriun.system.mapper.SysUserRoleMapper;
-import com.deuteriun.system.security.entity.SecurityUser;
 import com.deuteriun.system.service.UserService;
 import com.deuteriun.system.utils.DateUtils;
 import com.deuteriun.system.utils.SecurityUtils;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.security.Principal;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -33,7 +25,7 @@ public class UserServiceImpl implements UserService {
     SysUserMapper sysUserMapper;
 
     @Resource
-    SysRoleCodeMapper sysRoleCodeMapper;
+    SysRoleMapper sysRoleMapper;
 
     @Resource
     SysUserRoleMapper sysUserRoleMapper;
@@ -93,14 +85,14 @@ public class UserServiceImpl implements UserService {
                     .setModifyDate(DateUtils.currentDate());
             sysUserMapper.insert(user);
             SysUser sysUser = sysUserMapper.getUserByName(user.getUserName());
-            QueryWrapper<SysRoleCode> role_code = new QueryWrapper<SysRoleCode>().eq("role_code", SYS_USER_FLAG);
-            SysRoleCode sysRoleCode = sysRoleCodeMapper.selectOne(role_code);
-            if (sysRoleCode != null) {
+            QueryWrapper<SysRole> role_code = new QueryWrapper<SysRole>().eq("role_code", SYS_USER_FLAG);
+            SysRole sysRole = sysRoleMapper.selectOne(role_code);
+            if (sysRole != null) {
                 String securityUserName = SecurityUtils.getAuthentication().getName();
                 if (securityUserName != null) {
                     SysUser userByName = sysUserMapper.getUserByName(securityUserName);
                     SysUserRole sysUserRole = new SysUserRole()
-                            .setRoleId(sysRoleCode.getId())
+                            .setRoleId(sysRole.getId())
                             .setSysUserId(sysUser.getId())
                             .setCreateRoleUserId(userByName.getId())
                             .setCreateDate(DateUtils.currentDate());

@@ -3,10 +3,11 @@ package com.deuteriun.system.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
 
 /**
  * <p>
@@ -14,13 +15,13 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author Gavinin
- * @since 2022-04-01
+ * @since 2022-05-10
  */
 @Getter
 @Setter
 @Accessors(chain = true)
-@TableName("sys_role_code")
-public class SysRoleCode implements Serializable {
+@TableName("sys_role")
+public class SysRole implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -30,6 +31,8 @@ public class SysRoleCode implements Serializable {
     private String roleCode;
 
     private String roleName;
+
+    private Long createUser;
 
 
 }

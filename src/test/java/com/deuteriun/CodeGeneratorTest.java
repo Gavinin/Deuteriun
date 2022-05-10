@@ -16,7 +16,6 @@ import java.util.Arrays;
 @EnableAutoConfiguration
 public class CodeGeneratorTest {
 
-
     public static void main(String[] args) {
         MybatisGeneratorConfig mybatisGeneratorConfig = new MybatisGeneratorConfig();
         mybatisGeneratorConfig.setAuthor("Gavinin");
@@ -24,7 +23,7 @@ public class CodeGeneratorTest {
         mybatisGeneratorConfig.setDatabaseUser("root");
         mybatisGeneratorConfig.setDatabasePassword("Gavin&084282");
         mybatisGeneratorConfig.setParentPackageName("com.deuteriun.system");
-        mybatisGeneratorConfig.setTables(Arrays.asList("sys_login_jwt_blacklist".split(",")));
+        mybatisGeneratorConfig.setTables(Arrays.asList("sys_user_role,sys_role".split(",")));
 
         new MybatisGenerator().generatorCode(mybatisGeneratorConfig);
 

@@ -1,11 +1,13 @@
 package com.deuteriun.system.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
-import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -29,6 +31,15 @@ public class SysUserRole implements Serializable {
      * Role string
      */
     private Integer roleId;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String roleCode;
+
+    /*
+        Role Name from sys_user_code
+         */
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String roleName;
 
     /**
      * User id from sys_user table

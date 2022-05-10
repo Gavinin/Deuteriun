@@ -1,7 +1,6 @@
 package com.deuteriun.system.service.impl;
 
 import com.deuteriun.system.entity.SysUserRole;
-import com.deuteriun.system.entity.SysUserRoleDTO;
 import com.deuteriun.system.mapper.SysUserMapper;
 import com.deuteriun.system.mapper.SysUserRoleMapper;
 import com.deuteriun.system.service.SysUserRoleService;
@@ -33,10 +32,10 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
 
     @Override
     public List<GrantedAuthority> getGrantedAuthorityListById(Long id) {
-        List<SysUserRoleDTO> maps = sysUserRoleMapper.listAllByUserId(id);
+        List<SysUserRole> maps = sysUserRoleMapper.listAllByUserId(id);
         List<GrantedAuthority> grantedAuthorityList = new ArrayList<>();
 
-        for (SysUserRoleDTO sysUserRoleDetail : maps) {
+        for (SysUserRole sysUserRoleDetail : maps) {
             grantedAuthorityList.add(new SimpleGrantedAuthority(sysUserRoleDetail.getRoleCode()));
         }
         return grantedAuthorityList;
