@@ -1,7 +1,9 @@
 package com.deuteriun.system.mapper;
 
-import com.deuteriun.system.entity.SysLoginJwtBlacklist;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.deuteriun.system.entity.SysLoginJwtBlacklist;
+
+import java.util.List;
 
 /**
  * <p>
@@ -15,7 +17,7 @@ public interface SysLoginJwtBlacklistMapper extends BaseMapper<SysLoginJwtBlackl
 
     SysLoginJwtBlacklist listByuserNameAndToken(String userName, String token);
 
-    SysLoginJwtBlacklist listByuserName(String userName);
+    List<SysLoginJwtBlacklist> listByuserName(String userName);
 
     Boolean deleteByUserName(String userName);
 }

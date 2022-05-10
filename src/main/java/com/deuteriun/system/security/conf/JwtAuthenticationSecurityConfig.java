@@ -1,7 +1,8 @@
 package com.deuteriun.system.security.conf;
 
 import com.deuteriun.system.security.filter.JwtAuthenticationSecurityFilter;
-import com.deuteriun.system.security.filter.TokenAuthenticationSecurityFilter;
+import com.deuteriun.system.security.impl.RestAuthenticateFailureImpl;
+import com.deuteriun.system.security.impl.RestAuthenticateSuccessImpl;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;

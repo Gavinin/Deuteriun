@@ -1,5 +1,6 @@
 package com.deuteriun.common.utils;
 
+import com.deuteriun.system.entity.FilesConf;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,15 +24,8 @@ public class FilesUtils {
 
     private static String ROOT_FOLDER_POSITION;
 
-    @Value("${deuteriun.files.allow-suffix}")
-    private String[] allowSuffix;
-
-    private static String[] ALLOW_SUFFIX;
-
-
     @PostConstruct
     public void postConstruct() {
-        ALLOW_SUFFIX = allowSuffix;
 
         if (!filePosition.equals("/")) {
             ROOT_FOLDER_POSITION = filePosition + "/" + "DeuteriunFiles";
@@ -75,7 +69,7 @@ public class FilesUtils {
     public static Boolean checkSuffix(MultipartFile multipartFile) {
         String suffix = getSuffix(multipartFile.getOriginalFilename());
         if (StringUtils.isNotBlank(suffix)) {
-            for (String s : FilesUtils.ALLOW_SUFFIX) {
+            for (String s : FilesConf.getAllowSuffix()) {
                 if (suffix.equals(s)) {
                     return true;
                 }

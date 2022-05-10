@@ -1,10 +1,10 @@
 package com.deuteriun.system.security;
 
 import com.deuteriun.system.security.conf.JwtAuthenticationSecurityConfig;
-import com.deuteriun.system.security.conf.RestLogoutSuccessHandlerImpl;
-import com.deuteriun.system.utils.DeuteriunConfigurationUtils;
 import com.deuteriun.system.security.filter.TokenAuthenticationSecurityFilter;
+import com.deuteriun.system.security.impl.RestLogoutSuccessHandlerImpl;
 import com.deuteriun.system.security.service.impl.JwtUserDetailsServiceImpl;
+import com.deuteriun.system.utils.DeuteriunConfigurationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;

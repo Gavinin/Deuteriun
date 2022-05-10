@@ -9,7 +9,9 @@ import com.deuteriun.system.entity.SysUser;
 import com.deuteriun.system.entity.SysUserRole;
 import com.deuteriun.system.exception.SysException;
 import com.deuteriun.system.exception.UserException;
+import com.deuteriun.system.mapper.SysRoleMapper;
 import com.deuteriun.system.mapper.SysUserMapper;
+import com.deuteriun.system.mapper.SysUserRoleMapper;
 import com.deuteriun.system.service.SysUserRoleService;
 import com.deuteriun.system.service.UserService;
 import com.deuteriun.system.utils.SecurityUtils;
@@ -24,7 +26,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     public static final String SYS_USER_FLAG = "SYS_USER";
     public static final String SYS_ROOT_NAME = "root";
-    public static final String SYS_ROLE_TABLE_USER_KEY = "sys_user_id";
+    public static final String SYS_USER_ROLE_TABLE_USER_KEY = "sys_user_id";
 
     @Resource
     SysUserMapper sysUserMapper;
@@ -32,6 +34,11 @@ public class UserServiceImpl implements UserService {
     @Resource
     SysUserRoleService sysUserRoleService;
 
+    @Resource
+    SysUserRoleMapper sysUserRoleMapper;
+
+    @Resource
+    SysRoleMapper sysRoleMapper;
 
     @Resource
     PasswordEncoder passwordEncoder;
@@ -48,39 +55,40 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<SysUser> listAllUsers() {
-        return sysUserMapper.selectList(new QueryWrapper<SysUser>().eq("del",0));
+        return sysUserMapper.selectList(new QueryWrapper<SysUser>().eq("del", 0));
     }
 
     @Override
     public List<SysUser> findAllUser(IPage<SysUser> page) {
 
-        IPage<SysUser> sysUserIPage = sysUserMapper.selectPage(page, new QueryWrapper<SysUser>().eq("del",0));
+        IPage<SysUser> sysUserIPage = sysUserMapper.selectPage(page, new QueryWrapper<SysUser>().eq("del", 0));
         if (sysUserIPage != null) {
             List<SysUser> records = sysUserIPage.getRecords();
             getRoles(records);
+            return records;
         }
         return null;
     }
 
-    private void getRoles(List<SysUser> records) {
+    private void getRoles(List<SysUser> userLists) {
         List<Long> userList = new ArrayList<>();
         //get all id from list
-        for (SysUser record : records) {
+        for (SysUser record : userLists) {
             userList.add(record.getId());
         }
         if (userList.size() > 0) {
             //get all sys role
             List<SysUserRole> sysUserRoles = sysUserRoleService.listAllByUserIds(userList);
             if (sysUserRoles.size() > 0) {
-                for (SysUser record : records) {
+                for (SysUser sysUser : userLists) {
                     List<SysUserRole> list = new ArrayList<>();
-                    Long id = record.getId();
+                    Long id = sysUser.getId();
                     for (SysUserRole sysUserRole : sysUserRoles) {
                         if (id.equals(sysUserRole.getSysUserId())) {
                             list.add(sysUserRole);
                         }
                     }
-                    record.setSysUserRoleList(list);
+                    sysUser.setSysUserRoleList(list);
                 }
             }
         }
@@ -113,11 +121,11 @@ public class UserServiceImpl implements UserService {
         else if (sysUserInDB != null && sysUserInDB.getDel()) {
             //Delete previous user data
             if (sysUserMapper.deleteById(sysUserInDB) > 0) {
-                QueryWrapper<SysUserRole> eq = new QueryWrapper<SysUserRole>().eq(SYS_ROLE_TABLE_USER_KEY, sysUserInDB.getId());
-                List<SysUserRole> sysUserRoleList = sysUserRoleService.selectList(eq);
-                if (sysUserRoleList .size()>0) {
+                QueryWrapper<SysUserRole> eq = new QueryWrapper<SysUserRole>().eq(SYS_USER_ROLE_TABLE_USER_KEY, sysUserInDB.getId());
+                List<SysUserRole> sysUserRoleList = sysUserRoleMapper.selectList(eq);
+                if (sysUserRoleList.size() > 0) {
                     //Delete previous role data
-                    sysUserRoleService.deleteBatchIds(sysUserRoleList);
+                    sysUserRoleMapper.deleteBatchIds(sysUserRoleList);
                 }
             }
         }
@@ -127,21 +135,25 @@ public class UserServiceImpl implements UserService {
                     .setDel(false)
                     .setCreateDate(DateUtils.currentDate())
                     .setModifyDate(DateUtils.currentDate());
-            sysUserMapper.insert(user);
+            //insert user into db
+            int insert = sysUserMapper.insert(user);
             SysUser sysUser = sysUserMapper.getUserByName(user.getUserName());
-            QueryWrapper<SysRole> role_code = new QueryWrapper<SysRole>().eq("role_code", SYS_USER_FLAG);
-            SysRole sysRole = sysUserRoleService.selectOne(role_code);
-            if (sysRole != null) {
-                String securityUserName = SecurityUtils.getAuthentication().getName();
-                if (securityUserName != null) {
-                    SysUser userByName = sysUserMapper.getUserByName(securityUserName);
-                    SysUserRole sysUserRole = new SysUserRole()
-                            .setRoleId(sysRole.getId())
-                            .setSysUserId(sysUser.getId())
-                            .setCreateRoleUserId(userByName.getId())
-                            .setCreateDate(DateUtils.currentDate());
-                    if (sysUserRoleService.insert(sysUserRole) > 0) {
-                        return true;
+            if (insert > 0) {
+                QueryWrapper<SysRole> role_code = new QueryWrapper<SysRole>().eq("role_id", SYS_USER_FLAG);
+                SysRole sysRole = sysRoleMapper.selectOne(role_code);
+                if (sysRole != null) {
+                    String securityUserName = SecurityUtils.getAuthentication().getName();
+                    if (securityUserName != null) {
+                        SysUser userByName = sysUserMapper.getUserByName(securityUserName);
+                        //get user id who inserted
+                        SysUserRole inserter = new SysUserRole()
+                                .setRoleId(sysRole.getId())
+                                .setSysUserId(sysUser.getId())
+                                .setCreateRoleUserId(userByName.getId())
+                                .setCreateDate(DateUtils.currentDate());
+                        if (sysUserRoleMapper.insert(inserter) > 0) {
+                            return true;
+                        }
                     }
                 }
             }

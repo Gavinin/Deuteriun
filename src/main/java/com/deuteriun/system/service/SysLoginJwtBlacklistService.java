@@ -1,7 +1,9 @@
 package com.deuteriun.system.service;
 
-import com.deuteriun.system.entity.SysLoginJwtBlacklist;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.deuteriun.system.entity.SysLoginJwtBlacklist;
+
+import java.util.List;
 
 /**
  * <p>
@@ -15,7 +17,7 @@ public interface SysLoginJwtBlacklistService extends IService<SysLoginJwtBlackli
 
     SysLoginJwtBlacklist listByuserNameAndToken(String userName, String token);
 
-    SysLoginJwtBlacklist listByuserName(String userName);
+    List<SysLoginJwtBlacklist> listByuserName(String userName);
 
     Boolean delete(String userName);
 }
