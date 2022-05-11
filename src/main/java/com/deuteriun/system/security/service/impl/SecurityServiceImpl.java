@@ -32,6 +32,7 @@ public class SecurityServiceImpl implements SecurityService {
             throw new DisabledException("");
         }
         SecurityUser securityUser = new SecurityUser();
+        securityUser.setId(sysUser.getId());
         securityUser.setUsername(sysUser.getUserName());
         securityUser.setPassword(sysUser.getPassword());
         securityUser.setGrantedAuthorityList(sysUserRoleService.getGrantedAuthorityListById(sysUser.getId()));

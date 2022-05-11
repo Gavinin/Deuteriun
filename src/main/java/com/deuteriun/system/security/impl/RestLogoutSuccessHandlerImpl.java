@@ -34,7 +34,7 @@ public class RestLogoutSuccessHandlerImpl implements LogoutSuccessHandler {
 
         //del user from cache service
         String token = ServletUtil.getTokenFromHttpRequest(request);
-        String username = DeuteriunJwtUtils.getUsernameFromJWT(token);
+        String username = DeuteriunJwtUtils.getUsername(token);
         cacheService.delete(username);
 
         //Save this token to sys_login_jwt_blacklist

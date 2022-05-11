@@ -30,16 +30,21 @@ public class DeuteriunJwtUtils extends JwtUtils {
         JWT_REFRESH_EXPIRE_TIME_FLAG = jwtRefreshExpireTimeFlag * 60 * 1000;
     }
 
-    public static List<String> getAuthFromJWT(String token) {
+    public static List<String> getAuth(String token) {
         Claim valueFromJWT = JwtUtils.getClaimFromJWT(JWT_AUTH_FLAG, token);
         return valueFromJWT == null ? null : valueFromJWT.asList(String.class);
     }
 
-    public static String getUsernameFromJWT(String token) {
-        return getValueFromJWT(token, JWT_NAME_FLAG);
+    public static String getUsername(String token) {
+        return getValue(token, JWT_USER_NAME_FLAG);
     }
 
-    public static String getValueFromJWT(String token, String key) {
+    public static Long getUserId(String token) {
+        Claim claimFromJWT = JwtUtils.getClaimFromJWT(JWT_USER_NAME_ID, token);
+        return claimFromJWT == null ? null : claimFromJWT.asLong();
+    }
+
+    public static String getValue(String token, String key) {
         Claim valueFromJWT = JwtUtils.getClaimFromJWT(key, token);
         return valueFromJWT == null ? null : valueFromJWT.asString();
     }
@@ -51,4 +56,5 @@ public class DeuteriunJwtUtils extends JwtUtils {
     public static Date getRefreshDate(String token) {
         return JwtUtils.getClaimFromJWT(JWT_REFRESH_FLAG, token).asDate();
     }
+
 }

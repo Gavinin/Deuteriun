@@ -14,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 public class SecurityUser implements UserDetails {
 
+    private Long id;
     private String username;
     private String password;
     private List<GrantedAuthority> grantedAuthorityList;

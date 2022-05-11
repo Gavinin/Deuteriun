@@ -9,8 +9,6 @@ import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
 import com.deuteriun.system.security.entity.SecurityUser;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
@@ -26,11 +24,13 @@ public abstract class JwtUtils {
 
     public static Long JWT_EXPIRE_TIME = 300000L;
 
-    public static final String JWT_NAME_FLAG = "username";
+    public static final String JWT_USER_NAME_ID = "user_id";
+
+    public static final String JWT_USER_NAME_FLAG = "username";
 
     public static final String JWT_AUTH_FLAG = "auth";
 
-    public static final String JWT_REFRESH_FLAG = "refresh";
+    public static final String JWT_REFRESH_FLAG = "refresh_date";
 
     public static Long JWT_REFRESH_EXPIRE_TIME_FLAG = 300000L;
 
@@ -46,8 +46,9 @@ public abstract class JwtUtils {
         try {
             return JWT.create()
                     .withExpiresAt(expireDate)
-                    .withClaim(JWT_NAME_FLAG, principal.getUsername())
-                    .withClaim(JWT_REFRESH_FLAG,refreshDate)
+                    .withClaim(JWT_USER_NAME_ID, principal.getId())
+                    .withClaim(JWT_USER_NAME_FLAG, principal.getUsername())
+                    .withClaim(JWT_REFRESH_FLAG, refreshDate)
                     .withArrayClaim(JWT_AUTH_FLAG, result.toArray(new String[0]))
                     .sign(Algorithm.HMAC256(JWT_SECRET_KEY));
         } catch (JWTCreationException jwtCreationException) {
@@ -61,7 +62,7 @@ public abstract class JwtUtils {
         try {
             return JWT.create()
                     .withExpiresAt(expireDate)
-                    .withClaim(JWT_NAME_FLAG, userName)
+                    .withClaim(JWT_USER_NAME_FLAG, userName)
                     .sign(Algorithm.HMAC256(JWT_SECRET_KEY));
         } catch (JWTCreationException jwtCreationException) {
             return null;
@@ -73,7 +74,7 @@ public abstract class JwtUtils {
         try {
             return JWT.create()
                     .withExpiresAt(expireDate)
-                    .withClaim(JWT_NAME_FLAG, userName)
+                    .withClaim(JWT_USER_NAME_FLAG, userName)
                     .sign(Algorithm.HMAC256(JWT_SECRET_KEY));
         } catch (JWTCreationException jwtCreationException) {
             return null;
@@ -101,7 +102,7 @@ public abstract class JwtUtils {
 
 
     public static String getUsernameFromJWT(String token) {
-        Claim valueFromJWT = getClaimFromJWT(JWT_NAME_FLAG, token);
+        Claim valueFromJWT = getClaimFromJWT(JWT_USER_NAME_FLAG, token);
         return valueFromJWT == null ? null : valueFromJWT.asString();
     }
 }

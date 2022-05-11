@@ -28,7 +28,7 @@ public class JwtUserDetailsServiceImpl implements UserDetailsService {
         if (securityUser.getUsername() == null){
             throw new UsernameNotFoundException("User name not found!");
         }
-        return new SecurityUser(securityUser.getUsername(), securityUser.getPassword(), securityUser.getGrantedAuthorityList());
+        return new SecurityUser(securityUser.getId(),securityUser.getUsername(), securityUser.getPassword(), securityUser.getGrantedAuthorityList());
     }
 }
 

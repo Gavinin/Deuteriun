@@ -55,11 +55,10 @@ public class TokenAuthenticationSecurityFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String token = ServletUtil.getTokenFromHttpRequest(request);
         if (StringUtils.isNotBlank(token)) {
-            String username = DeuteriunJwtUtils.getUsernameFromJWT(token);
+            String username = DeuteriunJwtUtils.getUsername(token);
             String tokenFromCache = cacheService.get(username);
             if (tokenFromCache != null && tokenFromCache.equals(token)) {
-
-                List<String> authFromJWT = DeuteriunJwtUtils.getAuthFromJWT(token);
+                List<String> authFromJWT = DeuteriunJwtUtils.getAuth(token);
                 List<GrantedAuthority> grantedAuthorityList = new ArrayList<>();
                 if (authFromJWT != null) {
                     for (String authCode : authFromJWT) {
@@ -103,7 +102,8 @@ public class TokenAuthenticationSecurityFilter extends OncePerRequestFilter {
                     }
 
                 } else {
-                    ServletUtil.render(request, response, Result.error(ReturnStatus.SYSTEM_LOGOUT_SUCCESS));
+                    //User has logout need relaunch
+                    ServletUtil.render(request, response, Result.error(ReturnStatus.USER_NOT_LOGIN));
                     return;
                 }
             }
