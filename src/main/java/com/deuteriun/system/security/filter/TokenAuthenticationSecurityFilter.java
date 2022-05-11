@@ -90,8 +90,7 @@ public class TokenAuthenticationSecurityFilter extends OncePerRequestFilter {
                                 String jwt = DeuteriunJwtUtils.generateJWT(securityUser);
                                 //Refresh cache service
                                 cacheService.put(securityUser.getUsername(), jwt);
-                                Result success;
-                                success = Result.success(jwt, request.getServletPath());
+                                Result success = Result.success(ReturnStatus.REFRESH_TOKEN, (Object) jwt);
                                 ServletUtil.render(response, success);
                                 return;
                             }

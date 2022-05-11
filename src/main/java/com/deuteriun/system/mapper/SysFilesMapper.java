@@ -1,7 +1,7 @@
 package com.deuteriun.system.mapper;
 
-import com.deuteriun.system.entity.SysFiles;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.deuteriun.system.entity.SysFiles;
 
 import java.util.List;
 
@@ -16,4 +16,10 @@ import java.util.List;
 public interface SysFilesMapper extends BaseMapper<SysFiles> {
 
     int batchInsert(List<SysFiles> sysFilesList);
+
+    int batchDelete(List<SysFiles> sysFilesList);
+
+    List<SysFiles> mixList(SysFiles sysFile);
+
+    int batchFakeDeleteById(List<SysFiles> sysFilesList);
 }

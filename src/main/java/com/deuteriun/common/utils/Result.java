@@ -5,8 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 /**
  * <p>
  * Return to clint with JSON
@@ -27,15 +25,27 @@ public class Result {
     private Object body;
 
 
-
     public Result(ReturnStatus returnStatus) {
         this.code = returnStatus.getStatusCode();
         this.message = returnStatus.getStatusMessage();
-        this.date = DateUtils.SYSTEM_DATETIME_FORMATOR.format(new Date());
+        this.date = DateUtils.currentDateStr();
+
+    }
+
+    public Result(ReturnStatus returnStatus, Object body) {
+        this.code = returnStatus.getStatusCode();
+        this.message = returnStatus.getStatusMessage();
+        this.date = DateUtils.currentDateStr();
+        this.body = body;
     }
 
     public static Result success(ReturnStatus status) {
         return new Result(status);
+
+    }
+
+    public static Result success(ReturnStatus status, Object body) {
+        return new Result(status, body);
 
     }
 

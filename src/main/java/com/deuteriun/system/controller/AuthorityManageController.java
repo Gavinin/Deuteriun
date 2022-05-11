@@ -4,17 +4,17 @@ import com.deuteriun.common.enums.ReturnStatus;
 import com.deuteriun.common.utils.Result;
 import com.deuteriun.common.utils.StringUtils;
 import com.deuteriun.system.entity.AutorityManageDTO;
+import com.deuteriun.system.entity.SysRole;
 import com.deuteriun.system.entity.SysUserRole;
+import com.deuteriun.system.service.SysRoleService;
 import com.deuteriun.system.service.SysUserRoleService;
-import com.deuteriun.system.utils.SecurityUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.Collection;
+import java.util.List;
 
 /**
  * @ClassName AuthorityManageController
@@ -31,11 +31,14 @@ public class AuthorityManageController {
     @Resource
     SysUserRoleService sysUserRoleService;
 
+    @Resource
+    SysRoleService sysRoleService;
+
     @GetMapping("/list")
     @PreAuthorize(value = "hasAuthority('SYS_USER') AND hasAuthority('AUTH_MANAGE')")
     Result list(@RequestBody AutorityManageDTO autorityManageDTO) {
-        Collection<GrantedAuthority> authorities = SecurityUtils.getAllAuthorities();
-        return Result.success(authorities);
+       List<SysRole> sysRoles = sysRoleService.list();
+        return Result.success(sysRoles);
     }
 
 

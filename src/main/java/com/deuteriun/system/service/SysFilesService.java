@@ -4,6 +4,8 @@ import com.deuteriun.system.entity.SysFiles;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -15,4 +17,8 @@ import org.springframework.web.multipart.MultipartFile;
 public interface SysFilesService extends IService<SysFiles> {
 
     Boolean updateFiles(MultipartFile[] file);
+
+    Boolean delete(List<SysFiles> files);
+
+    List<SysFiles> mixList(SysFiles sysFile);
 }

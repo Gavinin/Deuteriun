@@ -4,10 +4,55 @@
 
     <insert id="batchInsert">
         INSERT INTO sys_files
-        (file_name, file_position, create_user_id, create_date, ` modify_date`)
+        (file_name, file_position, create_user_id, create_date)
         VALUES
         <foreach collection="sysFilesList" item="user" separator=",">
-            (file_name, file_position, create_user_id, create_date, ` modify_date`)
+            (file_name, file_position, create_user_id, create_date)
         </foreach>
     </insert>
+    <update id="batchFakeDeleteById">
+        UPDATE sys_files SET del = 1
+            WHERE id IN
+                <foreach collection="sysFilesList" open="(" item="it" separator="," close=")">
+                    #{it.id}
+                </foreach>
+
+    </update>
+
+    <delete id="batchDelete">
+        DELETE FROM sys_files
+        WHERE id IN
+        <foreach collection="sysFilesList" open="(" item="it" separator="," close=")">
+            #{it.id}
+        </foreach>
+    </delete>
+
+
+    <select id="mixList" resultType="com.deuteriun.system.entity.SysFiles">
+        SELECT id, file_name, file_position, create_user_id, create_date, `del`
+        FROM sys_files sf
+        WHERE
+        <if test="null != sysFile.id">
+            AND sf.id = #{sysFile.id}
+        </if>
+        <if test="null != sysFile.fileName">
+            AND sf.file_name = #{sysFile.fileName}
+        </if>
+        <if test="null != sysFile.filePosition">
+            AND sf.file_position = #{sysFile.filePosition}
+        </if>
+        <if test="null != sysFile.createUserId">
+            AND sf.create_user_id = #{sysFile.createUserId}
+        </if>
+        <if test="null != sysFile.createDate">
+            AND sf.create_date = #{sysFile.createDate}
+        </if>
+        <if test="null != sysFile.moduleName">
+            AND sf.module_name = #{sysFile.moduleName}
+        </if>
+
+        AND sf.del = 0
+
+
+    </select>
 </mapper>

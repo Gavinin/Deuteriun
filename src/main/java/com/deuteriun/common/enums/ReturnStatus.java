@@ -26,6 +26,7 @@ public enum ReturnStatus {
     /*
      * 3***: Redirect
      */
+    REFRESH_TOKEN(3300,"刷新Token"),
 
     /*
      * 4***: Error

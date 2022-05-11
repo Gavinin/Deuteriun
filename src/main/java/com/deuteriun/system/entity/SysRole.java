@@ -3,6 +3,7 @@ package com.deuteriun.system.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -32,6 +33,7 @@ public class SysRole implements Serializable {
 
     private String roleName;
 
+    @JsonIgnore
     private Long createUser;
 
 

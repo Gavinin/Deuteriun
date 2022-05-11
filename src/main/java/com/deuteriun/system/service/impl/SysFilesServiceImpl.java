@@ -40,11 +40,13 @@ public class SysFilesServiceImpl extends ServiceImpl<SysFilesMapper, SysFiles> i
 
     @Override
     public Boolean updateFiles(MultipartFile[] multipartFiles) {
-        LocalDateTime localDateTime = DateUtils.currentDate();
-        List<SysFiles> sysFilesList = new ArrayList<>();
-        String folderPositionByDate = FilesUtils.getFolderPositionByDate(localDateTime);
+
+        //get user id
         SysUser userByName = sysUserMapper.getUserByName(SecurityUtils.getAuthentication().getName());
         if (userByName != null) {
+            LocalDateTime localDateTime = DateUtils.currentDate();
+            List<SysFiles> sysFilesList = new ArrayList<>();
+            String folderPositionByDate = FilesUtils.getFolderPositionByDate(localDateTime);
             for (MultipartFile multipartFile : multipartFiles) {
                 if (FilesUtils.checkSuffix(multipartFile)) {
                     SysFiles sysFiles = new SysFiles();
@@ -68,5 +70,35 @@ public class SysFilesServiceImpl extends ServiceImpl<SysFilesMapper, SysFiles> i
             }
         }
         return false;
+    }
+
+    @Override
+    public Boolean delete(List<SysFiles> files) {
+
+        List<SysFiles> sysFilesList = new ArrayList<>();
+        for (SysFiles file : files) {
+            List<SysFiles> sysFiles = sysFilesMapper.mixList(file);
+            sysFilesList.addAll(sysFiles);
+        }
+        if (sysFilesList.size() > 0) {
+            return fakeDel(sysFilesList) > 0;
+        }
+
+        return true;
+    }
+
+    public List<SysFiles> mixList(SysFiles sysFile) {
+        return sysFilesMapper.mixList(sysFile);
+    }
+
+    public int realDel(List<SysFiles> sysFilesList) {
+        return sysFilesMapper.batchDelete(sysFilesList);
+    }
+
+    public int fakeDel(List<SysFiles> sysFilesList) {
+        for (SysFiles sysFiles : sysFilesList) {
+            sysFiles.setDel(true);
+        }
+        return sysFilesMapper.batchFakeDeleteById(sysFilesList);
     }
 }
