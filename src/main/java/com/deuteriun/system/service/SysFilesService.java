@@ -16,9 +16,11 @@ import java.util.List;
  */
 public interface SysFilesService extends IService<SysFiles> {
 
-    Boolean updateFiles(MultipartFile[] file);
+    List<SysFiles> mixList(SysFiles sysFile);
+
+    List<SysFiles> updateFiles(MultipartFile[] file);
 
     Boolean delete(List<SysFiles> files);
 
-    List<SysFiles> mixList(SysFiles sysFile);
+    List<SysFiles> download(SysFiles sysFiles);
 }

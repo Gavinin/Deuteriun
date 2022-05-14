@@ -1,6 +1,7 @@
 package com.deuteriun.system.security.filter;
 
 import com.deuteriun.common.enums.ReturnStatus;
+import com.deuteriun.system.exception.SysException;
 import com.deuteriun.system.utils.DeuteriunJwtUtils;
 import com.deuteriun.common.utils.Result;
 import com.deuteriun.system.utils.ServletUtil;
@@ -71,28 +72,28 @@ public class TokenAuthenticationSecurityFilter extends OncePerRequestFilter {
             } else {
                 //Check token weather in blacklist
                 SysLoginJwtBlacklist list = sysLoginJwtBlacklistService.listByuserNameAndToken(username, token);
-                //IF token is not in blacklist,means user NOT Logout
+                //IF token is not in blacklist,means user refresh token has expired ,need refresh token
                 if (list == null) {
-                    //paras TOKEN for Expire Date
-                    Date expireDate = DeuteriunJwtUtils.getExpireDate(token);
-                    Date refreshDate = DeuteriunJwtUtils.getRefreshDate(token);
-                    Date currentDate = new Date();
-                    SecurityUser securityUser = securityService.getUserDetailByName(username);
-                    if (currentDate.after(expireDate)) {
-                        //Date has expire
-                        sysLoginJwtBlacklistService.save(new SysLoginJwtBlacklist(securityUser.getUsername(), token, new Date()));
-                    } else if (currentDate.before(refreshDate)) {
-                        //if Date not expire
-                        if (SecurityContextHolder.getContext().getAuthentication() == null) {
-                            if (DeuteriunJwtUtils.validateToken(token)) {
-                                //refresh JWT token expire date
-                                String jwt = DeuteriunJwtUtils.generateJWT(securityUser);
-                                //Refresh cache service
-                                cacheService.put(securityUser.getUsername(), jwt);
-                                Result success = Result.success(ReturnStatus.REFRESH_TOKEN, (Object) jwt);
-                                ServletUtil.render(response, success);
-                                return;
-                            }
+                    if (DeuteriunJwtUtils.validateToken(token)) {
+                        //paras TOKEN for Expire Date
+                        Date expireDate = DeuteriunJwtUtils.getExpireDate(token);
+                        Date refreshDate = DeuteriunJwtUtils.getRefreshDate(token);
+                       if (expireDate==null || refreshDate==null){
+                            throw new SysException("Check your token");
+                       }
+                        Date currentDate = new Date();
+                        SecurityUser securityUser = securityService.getUserDetailByName(username);
+                        if (currentDate.after(expireDate)) {
+                            //if date has expire
+                            sysLoginJwtBlacklistService.save(new SysLoginJwtBlacklist(securityUser.getUsername(), token, new Date()));
+                        } else if (currentDate.before(refreshDate)) {
+                            //if date not expire, just refresh token was expired
+                            String jwt = DeuteriunJwtUtils.generateJWT(securityUser);
+                            //Refresh cache service
+                            cacheService.put(securityUser.getUsername(), jwt);
+                            Result success = Result.success(ReturnStatus.REFRESH_TOKEN, (Object) jwt);
+                            ServletUtil.render(response, success);
+                            return;
                         }
 
                     } else {

@@ -5,13 +5,11 @@ import com.deuteriun.common.enums.ReturnStatus;
 import com.deuteriun.common.utils.Result;
 import com.deuteriun.common.utils.StringUtils;
 import com.deuteriun.system.entity.SysUser;
-import com.deuteriun.system.entity.SysRole;
 import com.deuteriun.system.entity.UserManageDTO;
 import com.deuteriun.system.exception.UserException;
 import com.deuteriun.system.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -64,7 +62,7 @@ public class UserManageController {
     }
 
     @ApiOperation("Update user")
-    @PostMapping("/update")
+    @PutMapping("/update")
     @PreAuthorize(value = "hasAuthority('SYS_USER') AND hasAuthority('USER_MANAGE')")
     Result updateUser(@RequestBody UserManageDTO userManageDTO) {
         String username = userManageDTO.getUsername();
@@ -80,7 +78,7 @@ public class UserManageController {
     }
 
     @ApiOperation("Delete user,Long user_id,String username,String user_nickname,")
-    @PostMapping("/delete")
+    @DeleteMapping("/delete")
     @PreAuthorize(value = "hasAuthority('SYS_USER') AND hasAuthority('USER_MANAGE')")
     Result deleteUser(@RequestBody UserManageDTO userManageDTO) {
         SysUser user = new SysUser().setId(userManageDTO.getUser_id())

@@ -9,12 +9,13 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author Gavinin
@@ -35,6 +36,9 @@ public class SysFiles implements Serializable {
     private String fileName;
 
     private String filePosition;
+
+    @NotEmpty
+    private String fileToken;
 
     private Long createUserId;
 

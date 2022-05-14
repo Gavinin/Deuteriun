@@ -95,4 +95,10 @@ public enum ReturnStatus {
         this.statusCode = statusCode;
         this.statusMessage = statusMessage;
     }
+
+
+    @Override
+    public String toString() {
+        return this.statusMessage;
+    }
 }

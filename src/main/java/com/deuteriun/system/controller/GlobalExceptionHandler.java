@@ -1,21 +1,22 @@
-package com.deuteriun.system.exception;
+package com.deuteriun.system.controller;
 
 import com.deuteriun.common.enums.ReturnStatus;
 import com.deuteriun.common.utils.Result;
+import com.deuteriun.system.exception.BaseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-@RestController
-@ControllerAdvice
+@RestControllerAdvice
 public class GlobalExceptionHandler {
 
     private final Logger logger = LoggerFactory.getLogger(ExceptionHandler.class);
@@ -32,6 +33,19 @@ public class GlobalExceptionHandler {
     public Result IOException(IOException e, HttpServletRequest req, HttpServletResponse res) {
         logger.error(e.getMessage());
         return Result.error(ReturnStatus.SYSTEM_NULL_POINT);
+    }
+
+    //权限异常
+    @ExceptionHandler(AccessDeniedException.class)
+    public Result IOException(AccessDeniedException e, HttpServletRequest req, HttpServletResponse res) {
+        logger.error(e.getMessage());
+        return Result.error(ReturnStatus.AUTHORITY_UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public Result handleAuthenticationException(AuthenticationException e, HttpServletResponse response) {
+        logger.error(e.getMessage());
+        return Result.error(ReturnStatus.AUTHORITY_UNAUTHORIZED);
     }
 
 

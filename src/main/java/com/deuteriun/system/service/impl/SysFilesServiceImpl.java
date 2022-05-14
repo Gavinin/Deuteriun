@@ -39,7 +39,7 @@ public class SysFilesServiceImpl extends ServiceImpl<SysFilesMapper, SysFiles> i
     SysUserMapper sysUserMapper;
 
     @Override
-    public Boolean updateFiles(MultipartFile[] multipartFiles) {
+    public List<SysFiles> updateFiles(MultipartFile[] multipartFiles) {
 
         //get user id
         SysUser userByName = sysUserMapper.getUserByName(SecurityUtils.getAuthentication().getName());
@@ -51,9 +51,10 @@ public class SysFilesServiceImpl extends ServiceImpl<SysFilesMapper, SysFiles> i
                 if (FilesUtils.checkSuffix(multipartFile)) {
                     SysFiles sysFiles = new SysFiles();
                     String currentFilePosition = folderPositionByDate + "/" + UUIDUtils.getUUIDNonCrossbar();
-
+                    String fileToken = DateUtils.currentDateStr(UUIDUtils.getUUIDNonCrossbar());
                     sysFiles.setFileName(multipartFile.getOriginalFilename())
                             .setFilePosition(currentFilePosition)
+                            .setFileToken(fileToken)
                             .setCreateUserId(userByName.getId())
                             .setCreateDate(localDateTime);
                     File file = new File(currentFilePosition);
@@ -66,10 +67,10 @@ public class SysFilesServiceImpl extends ServiceImpl<SysFilesMapper, SysFiles> i
                 }
             }
             if (sysFilesList.size() > 0) {
-                return sysFilesMapper.batchInsert(sysFilesList) > 0;
+                return sysFilesMapper.batchInsert(sysFilesList) > 0 ? sysFilesList : null;
             }
         }
-        return false;
+        return null;
     }
 
     @Override
@@ -85,6 +86,15 @@ public class SysFilesServiceImpl extends ServiceImpl<SysFilesMapper, SysFiles> i
         }
 
         return true;
+    }
+
+    @Override
+    public List<SysFiles> download(SysFiles sysFiles) {
+        List<SysFiles> sysFilesList = sysFilesMapper.mixList(sysFiles);
+        if (sysFilesList.size()>0){
+
+        }
+        return null;
     }
 
     public List<SysFiles> mixList(SysFiles sysFile) {

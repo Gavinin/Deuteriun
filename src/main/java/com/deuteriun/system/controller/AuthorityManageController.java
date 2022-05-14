@@ -3,7 +3,6 @@ package com.deuteriun.system.controller;
 import com.deuteriun.common.enums.ReturnStatus;
 import com.deuteriun.common.utils.Result;
 import com.deuteriun.common.utils.StringUtils;
-import com.deuteriun.system.entity.AutorityManageDTO;
 import com.deuteriun.system.entity.SysRole;
 import com.deuteriun.system.entity.SysUserRole;
 import com.deuteriun.system.service.SysRoleService;
@@ -34,9 +33,11 @@ public class AuthorityManageController {
     @Resource
     SysRoleService sysRoleService;
 
+
     @GetMapping("/list")
+    @ApiOperation("List all roles")
     @PreAuthorize(value = "hasAuthority('SYS_USER') AND hasAuthority('AUTH_MANAGE')")
-    Result list(@RequestBody AutorityManageDTO autorityManageDTO) {
+    Result list(@RequestBody SysRole sysRole) {
        List<SysRole> sysRoles = sysRoleService.list();
         return Result.success(sysRoles);
     }

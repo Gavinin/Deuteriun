@@ -2,4 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.deuteriun.system.mapper.SysRoleMapper">
 
+    <select id="mixList" resultType="com.deuteriun.system.entity.SysRole">
+        SELECT * FROM
+    </select>
 </mapper>

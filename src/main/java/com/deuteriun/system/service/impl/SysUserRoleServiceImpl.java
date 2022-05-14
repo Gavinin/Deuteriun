@@ -3,11 +3,9 @@ package com.deuteriun.system.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.deuteriun.common.utils.DateUtils;
-import com.deuteriun.system.entity.SysRole;
 import com.deuteriun.system.entity.SysUser;
 import com.deuteriun.system.entity.SysUserRole;
 import com.deuteriun.system.exception.AuthorException;
-import com.deuteriun.system.mapper.SysRoleMapper;
 import com.deuteriun.system.mapper.SysUserMapper;
 import com.deuteriun.system.mapper.SysUserRoleMapper;
 import com.deuteriun.system.service.SysUserRoleService;
@@ -31,8 +29,6 @@ import java.util.Objects;
  */
 @Service
 public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUserRole> implements SysUserRoleService {
-    public static final String ROW_ROLE_FLAG = "role_id";
-    public static final String ROW_USER_ID_FLAG = "sys_user_id";
 
     @Resource
     SysUserRoleMapper sysUserRoleMapper;
@@ -66,9 +62,9 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
         if (sysUser != null && !sysUser.getDel() && !sysUser.getBan()) {
             //Check if the current user role information already exists
             List<SysUserRole> sysUserRoleList = sysUserRoleMapper.listAllByUserId(sysUserRole.getSysUserId());
-            if (sysUserRoleList.size()>0) {
+            if (sysUserRoleList.size() > 0) {
                 for (SysUserRole userRole : sysUserRoleList) {
-                    if (userRole.getRoleCode().equals(sysUserRole.getRoleCode())){
+                    if (userRole.getRoleCode().equals(sysUserRole.getRoleCode())) {
                         throw new AuthorException("权限已经存在");
                     }
                 }
@@ -84,15 +80,18 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
         }
         return false;
     }
-    @Resource
-    SysRoleMapper sysRoleMapper;
+
     @Override
     public Boolean delete(SysUserRole sysUserRole) {
-        SysRole sysRole = sysRoleMapper.selectOne(new QueryWrapper<SysRole>().eq("role_code", sysUserRole.getRoleCode()));
-        if (sysRole!=null) {
-            SysUserRole role = sysUserRoleMapper.selectOne(new QueryWrapper<SysUserRole>().eq(ROW_USER_ID_FLAG, sysUserRole.getSysUserId()).eq(ROW_ROLE_FLAG, sysRole.getId()));
-            if (role != null) {
-                return sysUserRoleMapper.deleteById(role) > 0;
+        List<SysUserRole> sysUserRoleList = sysUserRoleMapper.listAllByUserId(sysUserRole.getId());
+        if (sysUserRoleList.size() > 0) {
+            for (SysUserRole userRole : sysUserRoleList) {
+                if (sysUserRole.getRoleCode().equals(userRole.getRoleCode())) {
+                    if (sysUserRoleMapper.deleteById(userRole) > 0) {
+                        return true;
+                    }
+                }
+
             }
         }
         return false;

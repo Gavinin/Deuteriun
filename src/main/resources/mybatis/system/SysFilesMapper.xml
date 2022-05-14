@@ -50,8 +50,12 @@
         <if test="null != sysFile.moduleName">
             AND sf.module_name = #{sysFile.moduleName}
         </if>
-
-        AND sf.del = 0
+        <if test="null != sysFile.del and sysFile.del > 0">
+            AND sf.del = 1
+        </if>
+        <if test="null == sysFile.del or sysFile.del = 0">
+            AND sf.del = 0
+        </if>
 
 
     </select>
