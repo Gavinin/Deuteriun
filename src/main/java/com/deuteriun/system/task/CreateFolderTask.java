@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 public class CreateFolderTask {
 
     @Scheduled(cron = "0 0 0 * * ?")
-    public void createFolder(){
+    public void createFolder() {
         FilesUtils.folderCheck();
     }
 

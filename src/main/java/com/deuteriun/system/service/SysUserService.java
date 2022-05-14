@@ -1,13 +1,11 @@
 package com.deuteriun.system.service;
 
-import com.deuteriun.system.entity.SysUser;
 import com.baomidou.mybatisplus.extension.service.IService;
-
-import java.util.List;
+import com.deuteriun.system.entity.SysUser;
 
 /**
  * <p>
- *  服务类
+ * 服务类
  * </p>
  *
  * @author Gavinin

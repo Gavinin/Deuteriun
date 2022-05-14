@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author Gavinin
@@ -25,7 +25,7 @@ public class SysLoginJwtBlacklistServiceImpl extends ServiceImpl<SysLoginJwtBlac
 
     @Override
     public SysLoginJwtBlacklist listByuserNameAndToken(String userName, String token) {
-        return sysLoginJwtBlacklistMapper.listByuserNameAndToken(userName,token);
+        return sysLoginJwtBlacklistMapper.listByuserNameAndToken(userName, token);
     }
 
     @Override

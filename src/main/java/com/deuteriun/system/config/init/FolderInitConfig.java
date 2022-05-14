@@ -4,7 +4,6 @@ import com.deuteriun.common.utils.FilesUtils;
 import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
-import java.io.File;
 
 /**
  * @ClassName FolderInitConfig

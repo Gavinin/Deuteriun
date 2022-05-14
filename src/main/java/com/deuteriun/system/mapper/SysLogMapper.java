@@ -1,11 +1,11 @@
 package com.deuteriun.system.mapper;
 
-import com.deuteriun.system.entity.SysLog;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.deuteriun.system.entity.SysLog;
 
 /**
  * <p>
- *  Mapper 接口
+ * Mapper 接口
  * </p>
  *
  * @author Gavinin

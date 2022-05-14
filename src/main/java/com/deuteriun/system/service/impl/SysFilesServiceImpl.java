@@ -91,7 +91,7 @@ public class SysFilesServiceImpl extends ServiceImpl<SysFilesMapper, SysFiles> i
     @Override
     public List<SysFiles> download(SysFiles sysFiles) {
         List<SysFiles> sysFilesList = sysFilesMapper.mixList(sysFiles);
-        if (sysFilesList.size()>0){
+        if (sysFilesList.size() > 0) {
 
         }
         return null;

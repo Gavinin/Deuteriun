@@ -2,8 +2,6 @@ package com.deuteriun;
 
 import com.deuteriun.system.config.mbg.MybatisGenerator;
 import com.deuteriun.system.config.mbg.config.MybatisGeneratorConfig;
-
-
 import org.junit.runner.RunWith;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;

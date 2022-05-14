@@ -1,9 +1,9 @@
 package com.deuteriun.system.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.deuteriun.system.entity.SysRole;
 import com.deuteriun.system.mapper.SysRoleMapper;
 import com.deuteriun.system.service.SysRoleService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.data.annotation.Reference;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author Gavinin
@@ -25,6 +25,6 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 
     @Override
     public List<SysRole> mixList() {
-       return sysRoleMapper.mixList();
+        return sysRoleMapper.mixList();
     }
 }

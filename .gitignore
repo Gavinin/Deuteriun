@@ -33,3 +33,10 @@ build/
 .vscode/
 
 /logs/
+
+### Gradle ###
+/.gradle/
+!/gradle/
+!/gradlew
+!/gradlew.bat
+!/settings.gradle

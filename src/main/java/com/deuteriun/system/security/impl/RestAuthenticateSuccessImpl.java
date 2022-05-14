@@ -1,12 +1,12 @@
 package com.deuteriun.system.security.impl;
 
 import com.deuteriun.common.utils.Result;
-import com.deuteriun.system.utils.ServletUtil;
-import com.deuteriun.system.utils.DeuteriunJwtUtils;
 import com.deuteriun.system.cache.CacheService;
 import com.deuteriun.system.entity.SysLoginJwtBlacklist;
 import com.deuteriun.system.security.entity.SecurityUser;
 import com.deuteriun.system.service.SysLoginJwtBlacklistService;
+import com.deuteriun.system.utils.DeuteriunJwtUtils;
+import com.deuteriun.system.utils.ServletUtil;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;

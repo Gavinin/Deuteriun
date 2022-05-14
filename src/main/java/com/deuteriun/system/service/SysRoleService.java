@@ -1,13 +1,13 @@
 package com.deuteriun.system.service;
 
-import com.deuteriun.system.entity.SysRole;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.deuteriun.system.entity.SysRole;
 
 import java.util.List;
 
 /**
  * <p>
- *  服务类
+ * 服务类
  * </p>
  *
  * @author Gavinin

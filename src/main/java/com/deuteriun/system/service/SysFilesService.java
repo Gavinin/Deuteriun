@@ -1,14 +1,14 @@
 package com.deuteriun.system.service;
 
-import com.deuteriun.system.entity.SysFiles;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.deuteriun.system.entity.SysFiles;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 /**
  * <p>
- *  服务类
+ * 服务类
  * </p>
  *
  * @author Gavinin

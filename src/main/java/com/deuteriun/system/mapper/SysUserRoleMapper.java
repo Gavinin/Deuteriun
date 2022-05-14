@@ -16,7 +16,6 @@ import java.util.List;
 public interface SysUserRoleMapper extends BaseMapper<SysUserRole> {
 
     /**
-     *
      * @param userId User ID from Sys_User Table
      * @return All info
      */

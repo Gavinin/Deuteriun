@@ -1,6 +1,6 @@
 package com.deuteriun.system.exception;
 
-public class UserException extends BaseException{
+public class UserException extends BaseException {
     public UserException() {
         super();
     }

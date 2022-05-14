@@ -1,9 +1,9 @@
 package com.deuteriun.system.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.deuteriun.system.entity.SysUser;
 import com.deuteriun.system.mapper.SysUserMapper;
 import com.deuteriun.system.service.SysUserService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

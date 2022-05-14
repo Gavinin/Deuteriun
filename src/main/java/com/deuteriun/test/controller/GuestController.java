@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping()
-@Api(tags = "Guest",value = "Guest Controller")
+@Api(tags = "Guest", value = "Guest Controller")
 public class GuestController {
 
     @ApiOperation("GSC")
     @PostMapping("/gc")
     @PreAuthorize(value = "hasAuthority('SYS_USER')")
-    public String gc(){
+    public String gc() {
 
         return "success";
     }
