@@ -11,7 +11,6 @@ import java.time.format.DateTimeFormatter;
 @Component
 public class DateUtils {
     public static final String TIME_ZONE = "GMT+8";
-
     public static final String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
     public static final String DATE_TIME_FORMAT_SIMPLE = "yyyyMMddHHmmss";
     public static final String DATE_FORMAT = "yyyy-MM-dd";
@@ -20,11 +19,6 @@ public class DateUtils {
 
     public static final SimpleDateFormat SYSTEM_DATETIME_FORMATOR = new SimpleDateFormat(DATE_TIME_FORMAT);
 
-    /**
-     * Get current timestamp
-     *
-     * @return
-     */
     public static String currentTimestamp() {
         return String.valueOf(Instant.now().toEpochMilli());
     }
@@ -45,12 +39,6 @@ public class DateUtils {
         return LocalDate.now().format(DateTimeFormatter.ofPattern("dd"));
     }
 
-
-    /**
-     * current system date（yyyy-MM-dd）
-     *
-     * @return
-     */
     public static String currentDateStr() {
         return LocalDate.now().format(DateTimeFormatter.ofPattern(DATE_FORMAT));
     }
@@ -59,11 +47,6 @@ public class DateUtils {
         return LocalDate.now().format(DateTimeFormatter.ofPattern(dateFormat));
     }
 
-    /**
-     * current system date（yyyy-MM-dd HH:mm:ss）
-     *
-     * @return
-     */
     public static String currentLocalDataTime() {
         return LocalDateTime.now().format(DateTimeFormatter.ofPattern(DATE_TIME_FORMAT));
     }

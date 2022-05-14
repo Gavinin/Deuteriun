@@ -28,24 +28,19 @@ public class Result {
     public Result(ReturnStatus returnStatus) {
         this.code = returnStatus.getStatusCode();
         this.message = returnStatus.getStatusMessage();
-        this.date = DateUtils.currentDateStr();
-
+        this.date = DateUtils.currentLocalDataTime();
     }
 
-    public Result(ReturnStatus returnStatus, Object body) {
-        this.code = returnStatus.getStatusCode();
-        this.message = returnStatus.getStatusMessage();
-        this.date = DateUtils.currentDateStr();
-        this.body = body;
-    }
+
 
     public static Result success(ReturnStatus status) {
         return new Result(status);
-
     }
 
     public static Result success(ReturnStatus status, Object body) {
-        return new Result(status, body);
+        Result result = new Result(status);
+        result.setBody(body);
+        return result;
 
     }
 

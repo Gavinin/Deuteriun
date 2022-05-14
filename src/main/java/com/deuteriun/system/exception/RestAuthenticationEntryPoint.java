@@ -22,9 +22,14 @@ import java.io.IOException;
 @Component("restAuthenticationEntryPoint")
 public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
+
+    private HandlerExceptionResolver resolver;
+
     @Autowired
     @Qualifier("handlerExceptionResolver")
-    private HandlerExceptionResolver resolver;
+    public void setResolver(HandlerExceptionResolver resolver) {
+        this.resolver = resolver;
+    }
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {

@@ -1,6 +1,6 @@
 package com.deuteriun.system.exception;
 
-public class SysException extends BaseException{
+public class SysException extends BaseException {
     public SysException() {
         super();
     }
