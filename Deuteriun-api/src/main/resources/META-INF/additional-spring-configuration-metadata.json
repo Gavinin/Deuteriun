@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "deuteriun.jwt-expire-time",
+      "type": "java.lang.String",
+      "description": "Description for deuteriun.jwt-expire-time."
+  }
+] }

@@ -1,0 +1,79 @@
+{
+  "global": {
+    "index": "主页",
+    "on-loading": "正在加载",
+    "user": {
+      "name": "用户名",
+      "nick-name": "昵称",
+      "gender": "性别",
+      "email": "电子邮箱"
+    }
+
+  },
+  "nav": {
+    "logo-name": "Deuteriun",
+    "logout": "登出",
+    "settings": "设置"
+  },
+  "setting": {
+    "inp-warning": "请检查输入",
+    "user-password": {
+      "name": "密码修改",
+      "o-pass": "旧密码",
+      "n-pass": "新密码",
+      "n-pass-c": "新密码检查",
+      "error": "密码不匹配"
+    },
+
+    "user-profile": {
+      "name": "用户资料",
+      "btn-change": "修改"
+    }
+  },
+
+  "msg": {
+    "notifier": {
+      "send": "说",
+      "no-message": "暂无任何消息"
+    }
+  },
+  "error": {
+    "loading-error": "加载失败",
+    "page-access-denied": "拒绝访问",
+    "page-access-denied-solution": "非常抱歉，您无权访问当前页面，回到",
+    "page-not-found": "真抱歉，当前页面不存在!",
+    "page-not-found-solution": "请检查地址是否正确，回到"
+  },
+  "auth": {
+    "title-login": "请登录",
+    "title-reg": "注册",
+    "switcher-login": "已有账号？点击登录",
+    "switcher-reg": "点击注册",
+    "login": {
+      "name": "登陆",
+      "user-name-l": "用户名",
+      "user-name-w": "请输入用户名",
+      "psw-l": "密码",
+      "psw-w": "请输入密码"
+    },
+    "register": {
+      "name": "注册",
+      "user-name-l": "用户名",
+      "user-name-p": "不可更改",
+      "user-name-w": "请输入用户名",
+      "nick-name-l": "昵称",
+      "nick-name-p": "6-15个字符",
+      "nick-name-w": "请输入昵称",
+      "psw-l": "密码",
+      "psw-p": "密码",
+      "psw-w": "请输入密码",
+      "psw-check-l": "密码验证",
+      "psw-check-p": "密码验证",
+      "psw-check-w": "请输入密码验证",
+      "psw-check-e": "输入的密码不匹配，请重新输入",
+      "need-agreement": "请阅读用户协议",
+      "have-agreement": "已阅读",
+      "agreement": "用户协议"
+    }
+  }
+}

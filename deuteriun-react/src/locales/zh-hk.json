@@ -1,0 +1,53 @@
+{
+  "global": {
+    "index": "主頁",
+    "on-loading": "正在加載"
+  },
+  "nav": {
+    "logo-name": "氘",
+    "logout": "登出"
+  },
+  "msg": {
+    "notifier": {
+      "send": "說",
+      "no-message": "暫無任何消息"
+    }
+  },
+  "error": {
+    "loading-error": "加載失敗",
+    "page-not-found": "真抱歉，當前頁面不存在!",
+    "page-not-found-solution": "請檢查地址是否正確，回到"
+  },
+  "auth": {
+    "title-login": "請登錄",
+    "title-reg": "註冊",
+    "switcher-login": "已有賬號？點擊登錄",
+    "switcher-reg": "點擊註冊",
+    "login": {
+      "name": "登陸",
+      "user-name-l": "用戶名",
+      "user-name-w": "請輸入用戶名",
+      "psw-l": "密碼",
+      "psw-w": "請輸入密碼"
+    },
+    "register": {
+      "name": "註冊",
+      "user-name-l": "用戶名",
+      "user-name-p": "不可更改",
+      "user-name-w": "請輸入用戶名",
+      "nick-name-l": "昵稱",
+      "nick-name-p": "6-15個字符",
+      "nick-name-w": "請輸入昵稱",
+      "psw-l": "密碼",
+      "psw-p": "密碼",
+      "psw-w": "請輸入密碼",
+      "psw-check-l": "密碼驗證",
+      "psw-check-p": "密碼驗證",
+      "psw-check-w": "請輸入密碼驗證",
+      "psw-check-e": "輸入的密碼不匹配，請重新輸入",
+      "need-agreement": "請閱讀用戶協議",
+      "have-agreement": "已閱讀",
+      "agreement": "用戶協議"
+    }
+  }
+}

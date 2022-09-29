@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deuteriun.system.mapper.SysFilesMapper">
+
+    <insert id="batchInsert">
+        INSERT INTO sys_files
+        (file_name, file_position, create_user_id, create_date)
+        VALUES
+        <foreach collection="sysFilesList" item="user" separator=",">
+            (file_name, file_position, create_user_id, create_date)
+        </foreach>
+    </insert>
+    <update id="batchFakeDeleteById">
+        UPDATE sys_files SET del = 1
+            WHERE id IN
+                <foreach collection="sysFilesList" open="(" item="it" separator="," close=")">
+                    #{it.id}
+                </foreach>
+
+    </update>
+
+    <delete id="batchDelete">
+        DELETE FROM sys_files
+        WHERE id IN
+        <foreach collection="sysFilesList" open="(" item="it" separator="," close=")">
+            #{it.id}
+        </foreach>
+    </delete>
+
+
+    <select id="mixList" resultType="com.deuteriun.system.entity.SysFiles">
+        SELECT id, file_name, file_position, create_user_id, create_date, `del`
+        FROM sys_files sf
+        <where>
+            <if test="null != sysFile.id">
+                AND sf.id = #{sysFile.id}
+            </if>
+            <if test="null != sysFile.fileName">
+                AND sf.file_name = #{sysFile.fileName}
+            </if>
+            <if test="null != sysFile.filePosition">
+                AND sf.file_position = #{sysFile.filePosition}
+            </if>
+            <if test="null != sysFile.createUserId">
+                AND sf.create_user_id = #{sysFile.createUserId}
+            </if>
+            <if test="null != sysFile.createDate">
+                AND sf.create_date = #{sysFile.createDate}
+            </if>
+            <if test="null != sysFile.moduleName">
+                AND sf.module_name = #{sysFile.moduleName}
+            </if>
+            <if test="null != sysFile.del and sysFile.del > 0">
+                AND sf.del = 1
+            </if>
+            <if test="null == sysFile.del or sysFile.del = 0">
+                AND sf.del = 0
+            </if>
+        </where>
+
+
+
+    </select>
+</mapper>

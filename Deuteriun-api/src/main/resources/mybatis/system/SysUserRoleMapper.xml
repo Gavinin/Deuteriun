@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deuteriun.system.mapper.SysUserRoleMapper">
+
+    <select id="listAllByUserId" parameterType="java.lang.Long" resultType="com.deuteriun.system.entity.SysUserRole">
+        select su.id,
+               su.role_id,
+               sr.role_code,
+               sr.role_name,
+               su.sys_user_id,
+               su.create_role_user_id,
+               su.create_date
+        from (select id, role_id, sys_user_id, create_role_user_id, create_date
+              from sys_user_role
+              where sys_user_id = #{userId}) as su
+                 inner join sys_role as sr on su.role_id = sr.id
+    </select>
+
+
+    <select id="listAllByUserIds" parameterType="java.lang.Long"
+            resultType="com.deuteriun.system.entity.SysUserRole">
+        select su.id,
+               su.role_id,
+               sr.role_code,
+               sr.role_name,
+               su.sys_user_id,
+               su.create_role_user_id,
+               su.create_date
+        from (select id, role_id, sys_user_id, create_role_user_id, create_date
+        from sys_user_role
+        where sys_user_id in
+        <foreach item="item" index="index" collection="userList"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        ) as su
+        inner join sys_role as sr on su.role_id = sr.id
+    </select>
+
+</mapper>

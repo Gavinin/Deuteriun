@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url:
+    username:
+    password:
+
+  redis:
+    host:
+    port:
+    #   redis database number default 0
+    database: 1
+    password:
+
+logging:
+  level:
+    org:
+      springframework:
+        security: debug

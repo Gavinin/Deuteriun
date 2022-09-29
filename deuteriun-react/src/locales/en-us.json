@@ -1,0 +1,53 @@
+{
+  "global": {
+    "index": "Homepage",
+    "on-loading": "Loading"
+  },
+  "nav": {
+    "logo-name": "Deuteriun",
+    "logout": "Logout"
+  },
+  "msg": {
+    "notifier": {
+      "send": "Say",
+      "no-message": "No message yet"
+    }
+  },
+  "error": {
+    "loading-error": "Loading failed",
+    "page-not-found": "Sorry, the current page does not exist!",
+    "page-not-found-solution": "Please check if the address is correct, go back"
+  },
+  "auth": {
+    "title-login": "Please login",
+    "title-reg": "Register",
+    "switcher-login": "Already have an account? Click to log in",
+    "switcher-reg": "Click to register",
+    "login": {
+      "name": "Login",
+      "user-name-l": "Username",
+      "user-name-w": "Please enter username",
+      "psw-l": "password",
+      "psw-w": "Please enter your password"
+    },
+    "register": {
+      "name": "Register",
+      "user-name-l": "Username",
+      "user-name-p": "Cannot be changed",
+      "user-name-w": "Please enter username",
+      "nick-name-l": "nickname",
+      "nick-name-p": "6-15 characters",
+      "nick-name-w": "Please enter a nickname",
+      "psw-l": "password",
+      "psw-p": "password",
+      "psw-w": "Please enter your password",
+      "psw-check-l": "Password verification",
+      "psw-check-p": "Password Verification",
+      "psw-check-w": "Please enter your password to verify",
+      "psw-check-e": "The entered password does not match, please re-enter",
+      "need-agreement": "Please read the user agreement",
+      "have-agreement": "I have read",
+      "agreement": "User Agreement"
+    }
+  }
+}

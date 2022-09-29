@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deuteriun.system.mapper.SysNoticficationMapper">
+
+    <select id="listByReceiveUserId" resultType="com.deuteriun.system.entity.SysNoticfication">
+        select sn.id,
+               sn.uuid,
+               sn.message,
+               sn.receive_user_id,
+               su.user_name as send_user_name,
+               sn.send_user_id,
+               sn.create_data
+        from sys_noticfication sn,
+             sys_user su
+        where sn.send_user_id = su.id
+          and receive_user_id = #{userId}
+    </select>
+</mapper>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deuteriun.system.mapper.SysFilterRoleMapper">
+
+    <select id="mixList" resultType="com.deuteriun.system.entity.SysFilterRole">
+        SELECT id, sys_role_id, `filter`, create_user, create_date, modify_date
+        FROM sys_filter_role
+        <where>
+            <if test="null != sysFilterRole.id">
+                AND id = #{sysFilterRole.id}
+            </if>
+            <if test="null != sysFilterRole.sysRoleId">
+                AND sys_role_id = #{sysFilterRole.sysRoleId}
+            </if>
+            <if test="null != sysFilterRole.filter">
+                AND `filter` = #{sysFilterRole.filter}
+            </if>
+            <if test="null != sysFilterRole.createUser">
+                AND create_user = #{sysFilterRole.createUser}
+            </if>
+            <if test="null != sysFilterRole.modifyDate">
+                AND modify_date = #{sysFilterRole.modifyDate}
+            </if>
+        </where>
+    </select>
+    <select id="listAllWithRole" resultType="com.deuteriun.system.entity.SysFilterRole">
+        SELECT sfr.id, sfr.sys_role_id, sr.role_code sys_role, sfr.`filter`, sfr.create_user, sfr.create_date, sfr.modify_date
+        FROM (
+                 SELECT id, sys_role_id,  `filter`, create_user, create_date, modify_date
+                 FROM sys_filter_role) as sfr
+                 inner join sys_role as sr on sfr.sys_role_id = sr.id
+
+    </select>
+</mapper>

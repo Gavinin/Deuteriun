@@ -1,0 +1,86 @@
+server:
+  port: 8896
+
+spring:
+  application:
+    name: springboot-profile
+  profiles:
+    active: dev
+  main:
+    banner-mode: off
+  datasource:
+    hikari:
+      pool-name: Retail_HikariCP
+      minimum-idle: 5
+      idle-timeout: 180000
+      maximum-pool-size: 10
+      auto-commit: true
+      max-lifetime: 0
+      connection-timeout: 30000
+
+  redis:
+    timeout: 10000
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        max-wait: -1
+        min-idle: 0
+      shutdown-timeout: 1000ms
+    #    min
+    db1:
+      login-expired: 30
+    db2:
+      limit-login-expired: 30
+
+
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+mybatis-plus:
+  mapper-locations: classpath:mybatis/*/*Mapper.xml
+  type-aliases-package: com.deuteriun.*.mapper
+  global-config:
+    banner: false
+
+swagger:
+  enable: true
+  application-name: ${spring.application.name}
+  application-version: 1.0
+  application-description: Deuteriun API
+
+#logging:
+#  config: src/main/resources/logback-prod.xml
+
+deuteriun:
+#  guest can view address that not be stored in filterRole table
+#  which means guest can access address which not be defined roles.
+  anyone-permission: false
+  files:
+    position: /
+    allow-suffix:
+      - jpg
+      - svg
+
+  http-permitall-address-list:
+    - /apis/user/login/**
+    - /apis/user/register/**
+    - /swagger-ui/**
+    - /swagger-resources/**
+    - /v3/**
+    - /csrf
+
+  reg-ip-block-times: 5
+  login-ip-block-times: 5
+
+
+  jwt:
+#    secret-key:
+#  min
+    expire-time: 4320
+    refresh-expire-time: 5
+
+
+
+

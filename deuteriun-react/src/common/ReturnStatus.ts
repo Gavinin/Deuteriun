@@ -1,0 +1,56 @@
+enum RETURN_STATUS {
+    /*
+     * 1***: Information
+     */
+    SERVICES_NORMAL = 1000,
+    /*
+     * 2***: Success
+     * 21** System
+     * 22** User
+     * 23** Authority
+     *
+     */
+    SUCCESS = 2000,
+    SYSTEM_LOGIN_SUCCESS = 2102,
+    SYSTEM_LOGOUT_SUCCESS = 2102,
+    USER_CREATE_SUCCESS = 2211,
+    USER_UPDATE_SUCCESS = 2211,
+    USER_DELETE_SUCCESS = 2212,
+    ROLE_CREATE_SUCCESS = 2311,
+    ROLE_DELETE_SUCCESS = 2312,
+    FILTER_CREATE_SUCCESS = 2313,
+    FILTER_DELETE_SUCCESS = 2314,
+    /*,* 3***: Redirect,*/
+    REFRESH_TOKEN = 3300,
+
+    /*
+    * 4***: Error
+    * 41** System error
+    * 42** User error
+    * 43** Authority error
+    */
+    ERROR = 4000,
+    SYSTEM_ERROR = 4100,
+    SYSTEM_UNKNOWN_ERROR = 4101,
+    SYSTEM_NULL_POINT = 4102,
+    SYSTEM_IO_EXCEPTION = 4103,
+    SYSTEM_JSON_ERROR = 4104,
+    USER_NOT_LOGIN = 4200,
+    USER_PASSWORD_ERROR = 4201,
+    USER_ACCOUNT_EXPIRED = 4202,
+    USER_PASSWORD_EXPIRED = 4203,
+    USER_ACCOUNT_DISABLE = 4204,
+    USER_ACCOUNT_LOCKED = 4205,
+    USER_ACCOUNT_NOT_EXIST = 4206,
+    USER_CREATE_FAIL = 4211,
+    USER_UPDATE_FAIL = 4212,
+    USER_DELETE_FAIL = 4213,
+
+    AUTHORITY_ERROR = 4300,
+    AUTHORITY_UNAUTHORIZED = 4301,
+
+}
+
+export default RETURN_STATUS;
+
+
